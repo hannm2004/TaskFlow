@@ -16,25 +16,25 @@ public class Main {
 
         tasks.add(new Task(
                 "Implement Login",
-                "HIGH",
+                TaskPriority.HIGH,
                 100
         ));
 
         tasks.add(new Task(
                 "Design Database",
-                "HIGH",
+                TaskPriority.HIGH,
                 70
         ));
 
         tasks.add(new Task(
                 "Create REST API",
-                "MEDIUM",
+                TaskPriority.MEDIUM,
                 30
         ));
 
         tasks.add(new Task(
                 "Implement Docker",
-                "URGENT",
+                TaskPriority.URGENT,
                 0
         ));
 

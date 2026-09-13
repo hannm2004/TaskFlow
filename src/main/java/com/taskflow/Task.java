@@ -1,29 +1,30 @@
 package com.taskflow;
 
 public class Task {
+
     private String title;
-    private String priority;
+    private TaskPriority priority;
     private int progress;
 
-    public Task(String title, String priority, int progress){
+    public Task(String title, TaskPriority priority, int progress) {
         this.title = title;
         this.priority = priority;
         this.progress = progress;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getPriority(){
+    public TaskPriority getPriority() {
         return priority;
     }
 
-    public int getProgress(){
+    public int getProgress() {
         return progress;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return TaskUtils.getTaskStatus(progress);
     }
 }
