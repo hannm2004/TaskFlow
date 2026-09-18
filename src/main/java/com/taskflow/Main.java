@@ -4,28 +4,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        long taskId = 1001L;
+        int[] progresses = {100, 70, 30, 0};
 
-        String taskTitle = "Implement Docker";
-        String taskDescription = "Learn Docker and containerize TaskFlow";
+        System.out.println("=== TASKFLOW TASKS ===");
 
-        String priority = "HIGH";
+        for (int i = 0; i < progresses.length; i++) {
 
-        int progress = 30;
+            int progress = progresses[i];
 
-        boolean completed = false;
+            String status = getTaskStatus(progress);
 
-        System.out.println("=== TASKFLOW ===");
-        System.out.println("ID: " + taskId);
-        System.out.println("Task: " + taskTitle);
-        System.out.println("Description: " + taskDescription);
-        System.out.println("Priority: " + priority);
-        System.out.println("Progress: " + progress + "%");
-        System.out.println("Completed: " + completed);
-
-        String status = getTaskStatus(progress);
-
-        System.out.println("Status: " + status);
+            System.out.println(
+                    "Task " + (i + 1)
+                            + " | Progress: " + progress + "%"
+                            + " | Status: " + status
+            );
+        }
     }
 
     public static String getTaskStatus(int progress) {
