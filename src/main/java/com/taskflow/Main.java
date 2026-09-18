@@ -30,18 +30,28 @@ public class Main {
 
         System.out.println("=== TASKFLOW ===");
 
-        System.out.println("ID: " + task1.id);
-        System.out.println("Task: " + task1.title);
-        System.out.println("Description: " + task1.description);
-        System.out.println("Priority: " + task1.priority);
-        System.out.println("Progress: " + task1.progress + "%");
+        System.out.println("ID: " + task1.getId());
+        System.out.println("Task: " + task1.getTitle());
+        System.out.println("Description: " + task1.getDescription());
+        System.out.println("Priority: " + task1.getPriority());
+        System.out.println("Progress: " + task1.getProgress() + "%");
 
         System.out.println();
 
-        System.out.println("ID: " + task2.id);
-        System.out.println("Task: " + task2.title);
-        System.out.println("Description: " + task2.description);
-        System.out.println("Priority: " + task2.priority);
-        System.out.println("Progress: " + task2.progress + "%");
+        System.out.println("ID: " + task2.getId());
+        System.out.println("Task: " + task2.getTitle());
+        System.out.println("Description: " + task2.getDescription());
+        System.out.println("Priority: " + task2.getPriority());
+        System.out.println("Progress: " + task2.getProgress() + "%");
+
+        System.out.println();
+
+        task2.setProgress(80);
+
+        System.out.println(
+                "Task 2 new progress: "
+                + task2.getProgress()
+                + "%"
+        );
     }
 }

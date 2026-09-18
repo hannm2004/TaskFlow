@@ -10,11 +10,11 @@ package com.taskflow;
  */
 public class Task {
 
-    long id;
-    String title;
-    String description;
-    String priority;
-    int progress;
+    private long id;
+    private String title;
+    private String description;
+    private String priority;
+    private int progress;
 
     public Task(
             long id,
@@ -27,6 +27,36 @@ public class Task {
         this.title = title;
         this.description = description;
         this.priority = priority;
+        setProgress(progress);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        if (progress < 0 || progress > 100) {
+            throw new IllegalArgumentException(
+                    "Progress must be between 0 and 100"
+            );
+        }
+
         this.progress = progress;
     }
 }
