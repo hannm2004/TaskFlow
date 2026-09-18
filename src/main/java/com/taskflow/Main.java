@@ -27,6 +27,15 @@ public class Main {
                 "HIGH",
                 70
         );
+        
+        BugTask bugTask = new BugTask(
+                1003L,
+                "Fix Login Error",
+                "Fix authentication error",
+                "URGENT",
+                30,
+                "CRITICAL"
+        );
 
         System.out.println("=== TASKFLOW ===");
 
@@ -46,6 +55,14 @@ public class Main {
 
         System.out.println();
 
+        System.out.println("=== BUG TASK ===");
+        System.out.println("ID: " + bugTask.getId());
+        System.out.println("Task: " + bugTask.getTitle());
+        System.out.println("Description: " + bugTask.getDescription());
+        System.out.println("Priority: " + bugTask.getPriority());
+        System.out.println("Progress: " + bugTask.getProgress() + "%");
+        System.out.println("Severity: " + bugTask.getBugSeverity());
+
         task2.setProgress(80);
 
         System.out.println(
@@ -53,5 +70,6 @@ public class Main {
                 + task2.getProgress()
                 + "%"
         );
+
     }
 }
