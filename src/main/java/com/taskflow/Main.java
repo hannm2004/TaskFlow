@@ -23,14 +23,25 @@ public class Main {
         System.out.println("Progress: " + progress + "%");
         System.out.println("Completed: " + completed);
 
+        String status = getTaskStatus(progress);
+
+        System.out.println("Status: " + status);
+    }
+
+    public static String getTaskStatus(int progress) {
+
         if (progress < 0 || progress > 100) {
-            System.out.println("Status: INVALID");
-        } else if (progress == 100) {
-            System.out.println("Status: DONE");
-        } else if (progress >= 50) {
-            System.out.println("Status: IN_PROGRESS");
-        } else {
-            System.out.println("Status: TODO");
+            return "INVALID";
         }
+
+        if (progress == 100) {
+            return "DONE";
+        }
+
+        if (progress >= 50) {
+            return "IN_PROGRESS";
+        }
+
+        return "TODO";
     }
 }
