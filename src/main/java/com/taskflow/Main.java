@@ -1,57 +1,45 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.taskflow;
 
+/**
+ *
+ * @author HP
+ */
 public class Main {
 
     public static void main(String[] args) {
 
-        long[] taskIds = {1001L, 1002L, 1003L, 1004L};
+        Task task1 = new Task();
 
-        String[] taskTitles = {
-                "Implement Login",
-                "Design Database",
-                "Create REST API",
-                "Implement Docker"
-        };
+        task1.id = 1001L;
+        task1.title = "Implement Login";
+        task1.description = "Implement user authentication";
+        task1.priority = "HIGH";
+        task1.progress = 100;
 
-        String[] priorities = {
-                "HIGH",
-                "HIGH",
-                "MEDIUM",
-                "URGENT"
-        };
+        System.out.println("=== TASKFLOW ===");
+        System.out.println("ID: " + task1.id);
+        System.out.println("Task: " + task1.title);
+        System.out.println("Description: " + task1.description);
+        System.out.println("Priority: " + task1.priority);
+        System.out.println("Progress: " + task1.progress + "%");
+        
+        Task task2 = new Task();
 
-        int[] progresses = {100, 70, 30, 0};
+        task2.id = 1002L;
+        task2.title = "Design Database";
+        task2.description = "Design PostgreSQL database";
+        task2.priority = "HIGH";
+        task2.progress = 70;
 
-        System.out.println("=== TASKFLOW TASKS ===");
-
-        for (int i = 0; i < taskIds.length; i++) {
-
-            String status = getTaskStatus(progresses[i]);
-
-            System.out.println(
-                    "ID: " + taskIds[i]
-                            + " | Task: " + taskTitles[i]
-                            + " | Priority: " + priorities[i]
-                            + " | Progress: " + progresses[i] + "%"
-                            + " | Status: " + status
-            );
-        }
-    }
-
-    public static String getTaskStatus(int progress) {
-
-        if (progress < 0 || progress > 100) {
-            return "INVALID";
-        }
-
-        if (progress == 100) {
-            return "DONE";
-        }
-
-        if (progress >= 50) {
-            return "IN_PROGRESS";
-        }
-
-        return "TODO";
+        System.out.println();
+        System.out.println("ID: " + task2.id);
+        System.out.println("Task: " + task2.title);
+        System.out.println("Description: " + task2.description);
+        System.out.println("Priority: " + task2.priority);
+        System.out.println("Progress: " + task2.progress + "%");
     }
 }
