@@ -15,4 +15,18 @@ public class Task {
     String description;
     String priority;
     int progress;
+
+    public Task(
+            long id,
+            String title,
+            String description,
+            String priority,
+            int progress
+    ) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.progress = progress;
+    }
 }
