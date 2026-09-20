@@ -8,7 +8,7 @@ package com.taskflow;
  *
  * @author HP
  */
-public class BugTask extends Task {
+public class BugTask extends Task implements Assignable {
 
     private String bugSeverity;
 
@@ -27,9 +27,17 @@ public class BugTask extends Task {
     public String getBugSeverity() {
         return bugSeverity;
     }
-    
+
     @Override
     public String getTaskType() {
         return "BUG";
+    }
+
+    @Override
+    public void assignTo(String username) {
+        System.out.println(
+                "Bug task \"" + getTitle()
+                + "\" assigned to " + username
+        );
     }
 }

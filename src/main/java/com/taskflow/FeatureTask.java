@@ -8,8 +8,10 @@ package com.taskflow;
  *
  * @author HP
  */
-public class FeatureTask extends Task {
+public class FeatureTask extends Task implements Assignable {
+
     private String featureCategory;
+
     public FeatureTask(
             long id,
             String title,
@@ -29,5 +31,13 @@ public class FeatureTask extends Task {
     @Override
     public String getTaskType() {
         return "FEATURE";
+    }
+
+    @Override
+    public void assignTo(String username) {
+        System.out.println(
+                "Feature task \"" + getTitle()
+                + "\" assigned to " + username
+        );
     }
 }

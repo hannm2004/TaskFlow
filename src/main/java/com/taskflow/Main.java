@@ -196,5 +196,57 @@ public class Main {
                     + " | Progress: " + taskItem.getProgress() + "%"
             );
         }
+        System.out.println();
+
+        System.out.println("=== INTERFACE TEST ===");
+
+        Assignable assignableTask = new BugTask(
+                4001L,
+                "Fix Login Security Bug",
+                "Fix authentication security issue",
+                "URGENT",
+                20,
+                "CRITICAL"
+        );
+
+        assignableTask.assignTo("admin");
+
+        Assignable featureAssignable = new FeatureTask(
+                4002L,
+                "Add User Profile",
+                "Create user profile feature",
+                "MEDIUM",
+                0,
+                "USER"
+        );
+
+        featureAssignable.assignTo("developer");
+
+        System.out.println();
+        System.out.println("=== ASSIGNABLE TASKS ===");
+
+        List<Assignable> assignableTasks = new ArrayList<>();
+
+        assignableTasks.add(new BugTask(
+                5001L,
+                "Fix Payment Bug",
+                "Fix payment processing error",
+                "URGENT",
+                50,
+                "CRITICAL"
+        ));
+
+        assignableTasks.add(new FeatureTask(
+                5002L,
+                "Add User Profile",
+                "Create user profile feature",
+                "MEDIUM",
+                0,
+                "USER"
+        ));
+
+        for (Assignable assignable : assignableTasks) {
+            assignable.assignTo("developer");
+        }
     }
 }
