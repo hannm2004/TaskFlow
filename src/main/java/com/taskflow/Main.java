@@ -5,8 +5,10 @@
 package com.taskflow;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -365,6 +367,57 @@ public class Main {
 
         for (String tag : tags) {
             System.out.println("- " + tag);
+        }
+        System.out.println();
+        System.out.println("=== MAP OPERATIONS ===");
+
+        Map<Long, String> taskMap = new HashMap<>();
+
+        taskMap.put(1001L, "Implement Login");
+        taskMap.put(1002L, "Design Database");
+        taskMap.put(1003L, "Fix Login Error");
+
+        System.out.println(taskMap);
+
+        System.out.println(
+                "Task 1002: " + taskMap.get(1002L)
+        );
+
+        System.out.println(
+                "Has task 1002: " + taskMap.containsKey(1002L)
+        );
+
+        System.out.println(
+                "Has task 9999: " + taskMap.containsKey(9999L)
+        );
+
+        System.out.println(
+                "Has value Design Database: "
+                + taskMap.containsValue("Design Database")
+        );
+
+        System.out.println(
+                "Has value Docker: "
+                + taskMap.containsValue("Docker")
+        );
+
+        taskMap.remove(1002L);
+
+        System.out.println();
+        System.out.println("After remove: " + taskMap);
+        System.out.println(
+                "Total tasks in map: " + taskMap.size()
+        );
+        System.out.println();
+        System.out.println("Tasks in map:");
+
+        for (Map.Entry<Long, String> entry : taskMap.entrySet()) {
+
+            System.out.println(
+                    entry.getKey()
+                    + " → "
+                    + entry.getValue()
+            );
         }
     }
 }
