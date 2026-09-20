@@ -8,7 +8,7 @@ package com.taskflow;
  *
  * @author HP
  */
-public class Task {
+public abstract class Task {
 
     private long id;
     private String title;
@@ -60,9 +60,7 @@ public class Task {
         this.progress = progress;
     }
     
-    public String getTaskType() {
-        return "GENERAL";
-    }
+    public abstract String getTaskType();
 
     String getBugSeverity() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
