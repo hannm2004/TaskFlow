@@ -5,10 +5,10 @@
 - Project: TaskFlow
 - Direction: Java Backend + Docker
 - Repository: GitHub TaskFlow
-- Local path: D:\TaskFlow\taskflow
+- Local path: `D:\TaskFlow\taskflow`
 - Java: JDK 21
 - Build tool: Maven
-- Main package: com.taskflow
+- Main package: `com.taskflow`
 
 ---
 
@@ -48,8 +48,13 @@ Java Foundation
 - [x] Constructor
 - [x] Encapsulation
 - [x] Inheritance
-- [ ] Polymorphism
-- [ ] Collections
+- [x] Polymorphism
+- [x] Abstraction
+- [x] Interface
+- [x] Collections
+  - [x] List
+  - [x] Set
+  - [x] Map
 - [ ] Generics
 - [ ] Exceptions
 - [ ] Optional
@@ -60,27 +65,31 @@ Java Foundation
 
 ## Current Lesson
 
-Java OOP — Inheritance & Polymorphism
+Java Collections — List, Set & Map
 
 ### Completed
 
-- Created Task class
-- Created Task objects
-- Added Task constructor
-- Added encapsulation
-- Created BugTask extends Task
-- Used super(...)
-- Tested BugTask
+- Completed Collections fundamentals
+- Practiced `List` with `ArrayList`
+- Practiced `Set` with `HashSet`
+- Practiced `Map` with `HashMap`
+- Practiced `add()`, `size()`, `get()`, `remove()`
+- Practiced `contains()`, `containsKey()`, `containsValue()`
+- Practiced `Map.Entry` and `entrySet()`
+- Applied Collections concepts to TaskFlow examples
+- Verified the code successfully with Maven
+
+### Collections Summary
+
+- `List` → ordered collection, allows duplicates
+- `Set` → collection that does not allow duplicate elements
+- `Map` → stores data as `key -> value`
 
 ### Next
 
-1. Commit Inheritance
-2. Learn Polymorphism
-3. Override method
-4. @Override
-5. Upcasting
-6. Dynamic method dispatch
-7. Apply polymorphism to TaskFlow
+1. Commit/update the Collections checkpoint
+2. Learn Generics
+3. Continue Java Foundation
 
 ---
 
@@ -88,32 +97,23 @@ Java OOP — Inheritance & Polymorphism
 
 Current branch:
 
-feature/java-foundation
+`feature/java-foundation`
 
 Main:
-- main = stable
-- develop = development
-- feature/* = individual learning/feature branches
 
-Latest known commit:
+- `main` = stable
+- `develop` = development
+- `feature/*` = individual learning/feature branches
 
-e803fba feat: add Task constructor
+Latest known checkpoint:
+
+- `feat: add task interfaces`
+- `feat: practice task list collections`
+- `feat: practice set collections`
+- `feat: practice map collections`
 
 Working tree:
-- Last verified clean before Inheritance changes
-- Inheritance/Encapsulation changes need final commit
 
----
-
-## How To Continue
-
-When starting a new chat:
-
-"Tiếp tục TaskFlow"
-
-First:
-1. Check current Git status
-2. Check latest Git log
-3. Read this PROGRESS.md if needed
-4. Continue from the current checkpoint
-5. Do not restart completed lessons
+- Collections List / Set / Map practice completed
+- Latest Collections checkpoint committed and pushed
+- Continue from Generics when resuming
