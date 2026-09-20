@@ -59,7 +59,7 @@ public abstract class Task {
 
         this.progress = progress;
     }
-    
+
     public abstract String getTaskType();
 
     String getBugSeverity() {

@@ -5,7 +5,9 @@
 package com.taskflow;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -328,6 +330,41 @@ public class Main {
         } else {
 
             System.out.println("Task not found");
+        }
+
+        System.out.println();
+        System.out.println("=== SET OPERATIONS ===");
+
+        Set<String> tags = new HashSet<>();
+
+        tags.add("java");
+        tags.add("backend");
+        tags.add("spring");
+        tags.add("java");
+
+        System.out.println(tags);
+
+        System.out.println("Total tags: " + tags.size());
+
+        System.out.println(
+                "Has Java tag: " + tags.contains("java")
+        );
+
+        System.out.println(
+                "Has Docker tag: " + tags.contains("docker")
+        );
+
+        tags.remove("backend");
+
+        System.out.println();
+        System.out.println("After remove: " + tags);
+        System.out.println("Total tags: " + tags.size());
+
+        System.out.println();
+        System.out.println("Tags:");
+
+        for (String tag : tags) {
+            System.out.println("- " + tag);
         }
     }
 }
