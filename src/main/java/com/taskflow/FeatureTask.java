@@ -8,28 +8,26 @@ package com.taskflow;
  *
  * @author HP
  */
-public class BugTask extends Task {
-
-    private String bugSeverity;
-
-    public BugTask(
+public class FeatureTask extends Task {
+    private String featureCategory;
+    public FeatureTask(
             long id,
             String title,
             String description,
             String priority,
             int progress,
-            String bugSeverity
+            String featureCategory
     ) {
         super(id, title, description, priority, progress);
-        this.bugSeverity = bugSeverity;
+        this.featureCategory = featureCategory;
     }
 
-    public String getBugSeverity() {
-        return bugSeverity;
+    public String getFeatureCategory() {
+        return featureCategory;
     }
-    
+
     @Override
     public String getTaskType() {
-        return "BUG";
+        return "FEATURE";
     }
 }

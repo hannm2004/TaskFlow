@@ -59,4 +59,12 @@ public class Task {
 
         this.progress = progress;
     }
+    
+    public String getTaskType() {
+        return "GENERAL";
+    }
+
+    String getBugSeverity() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -1,35 +1,36 @@
+package com.taskflow;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.taskflow;
 
 /**
  *
  * @author HP
  */
-public class BugTask extends Task {
+public class ImprovementTask extends Task {
 
-    private String bugSeverity;
+    private String improvementArea;
 
-    public BugTask(
+    public ImprovementTask(
             long id,
             String title,
             String description,
             String priority,
             int progress,
-            String bugSeverity
+            String improvementArea
     ) {
         super(id, title, description, priority, progress);
-        this.bugSeverity = bugSeverity;
+        this.improvementArea = improvementArea;
     }
 
-    public String getBugSeverity() {
-        return bugSeverity;
+    public String getImprovementArea() {
+        return improvementArea;
     }
-    
+
     @Override
     public String getTaskType() {
-        return "BUG";
+        return "IMPROVEMENT";
     }
 }

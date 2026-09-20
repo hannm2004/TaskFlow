@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.taskflow;
-
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author HP
@@ -11,6 +12,7 @@ package com.taskflow;
 public class Main {
 
     public static void main(String[] args) {
+        List<Task> tasks = new ArrayList<>();
 
         Task task1 = new Task(
                 1001L,
@@ -36,6 +38,76 @@ public class Main {
                 30,
                 "CRITICAL"
         );
+        
+        Task normalTask = new Task(
+                1001L,
+                "Implement Login",
+                "Implement login feature",
+                "HIGH",
+                100
+        );
+
+        Task polymorphicBugTask = new BugTask(
+                1003L,
+                "Fix Login Error",
+                "Fix authentication error",
+                "URGENT",
+                30,
+                "CRITICAL"
+        );
+        
+        tasks.add(new Task(
+                3001L,
+                "Implement Login",
+                "Implement user authentication",
+                "HIGH",
+                100
+        ));
+
+        tasks.add(new BugTask(
+                3002L,
+                "Fix Payment Bug",
+                "Fix payment processing error",
+                "URGENT",
+                50,
+                "CRITICAL"
+        ));
+
+        tasks.add(new Task(
+                3003L,
+                "Create REST API",
+                "Create TaskFlow REST API",
+                "MEDIUM",
+                30
+        ));
+
+        tasks.add(new BugTask(
+                3004L,
+                "Fix Database Bug",
+                "Fix database connection error",
+                "HIGH",
+                20,
+                "HIGH"
+        ));
+        
+        tasks.add(new FeatureTask(
+                3005L,
+                "Add Dark Mode",
+                "Add dark mode for TaskFlow",
+                "MEDIUM",
+                40,
+                "UI"
+        ));
+
+        tasks.add(new ImprovementTask(
+                3006L,
+                "Optimize Dashboard",
+                "Improve dashboard performance",
+                "HIGH",
+                60,
+                "PERFORMANCE"
+        ));
+        
 
         System.out.println("=== TASKFLOW ===");
 
@@ -62,6 +134,33 @@ public class Main {
         System.out.println("Priority: " + bugTask.getPriority());
         System.out.println("Progress: " + bugTask.getProgress() + "%");
         System.out.println("Severity: " + bugTask.getBugSeverity());
+        
+        System.out.println();
+        
+        System.out.println("=== POLYMORPHISM ===");
+        System.out.println(
+                "Normal task type: " + normalTask.getTaskType()
+        );
+
+        System.out.println(
+                "Bug task type: " + polymorphicBugTask.getTaskType()
+        );
+        
+        System.out.println();
+        System.out.println("=== POLYMORPHISM TEST ===");
+
+        Task task = new BugTask(
+                2001L,
+                "Fix Payment Bug",
+                "Fix payment processing error",
+                "URGENT",
+                50,
+                "HIGH"
+        );
+
+        System.out.println("Type: " + task.getTaskType());
+        System.out.println("Title: " + task.getTitle());
+        System.out.println("Progress: " + task.getProgress() + "%");
 
         task2.setProgress(80);
 
@@ -70,6 +169,18 @@ public class Main {
                 + task2.getProgress()
                 + "%"
         );
+        
+        System.out.println();
+        System.out.println("=== TASK LIST ===");
+
+        for (Task taskItem : tasks) {
+            System.out.println(
+                    "ID: " + taskItem.getId()
+                    + " | Title: " + taskItem.getTitle()
+                    + " | Type: " + taskItem.getTaskType()
+                    + " | Progress: " + taskItem.getProgress() + "%"
+            );
+        }
 
     }
 }
