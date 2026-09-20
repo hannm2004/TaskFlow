@@ -248,5 +248,86 @@ public class Main {
         for (Assignable assignable : assignableTasks) {
             assignable.assignTo("developer");
         }
+
+        System.out.println();
+        System.out.println("=== LIST OPERATIONS ===");
+
+        List<Task> taskList = new ArrayList<>();
+
+        taskList.add(new FeatureTask(
+                6001L,
+                "Login",
+                "Implement login feature",
+                "HIGH",
+                100,
+                "AUTHENTICATION"
+        ));
+
+        taskList.add(new BugTask(
+                6002L,
+                "Fix Payment",
+                "Fix payment bug",
+                "URGENT",
+                50,
+                "CRITICAL"
+        ));
+
+        taskList.add(new ImprovementTask(
+                6003L,
+                "Optimize Database",
+                "Improve database performance",
+                "HIGH",
+                70,
+                "DATABASE"
+        ));
+
+        for (Task item : taskList) {
+
+            System.out.println(
+                    item.getId()
+                    + " | "
+                    + item.getTitle()
+                    + " | "
+                    + item.getTaskType()
+            );
+        }
+        System.out.println();
+
+        System.out.println(
+                "Total tasks: " + taskList.size()
+        );
+
+        Task firstTask = taskList.get(0);
+
+        System.out.println(
+                "First task: " + firstTask.getTitle()
+        );
+
+        //taskList.remove(1);
+        System.out.println(
+                "Total tasks after remove: " + taskList.size()
+        );
+
+        long targetId = 6002L;
+
+        Task foundTask = null;
+
+        for (Task item : taskList) {
+
+            if (item.getId() == targetId) {
+                foundTask = item;
+            }
+        }
+
+        if (foundTask != null) {
+
+            System.out.println(
+                    "Found task: " + foundTask.getTitle()
+            );
+
+        } else {
+
+            System.out.println("Task not found");
+        }
     }
 }
