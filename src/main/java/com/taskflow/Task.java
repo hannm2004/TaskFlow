@@ -51,8 +51,10 @@ public abstract class Task {
     }
 
     public void setProgress(int progress) {
+
         if (progress < 0 || progress > 100) {
-            throw new IllegalArgumentException(
+
+            throw new InvalidTaskProgressException(
                     "Progress must be between 0 and 100"
             );
         }
@@ -65,4 +67,5 @@ public abstract class Task {
     String getBugSeverity() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

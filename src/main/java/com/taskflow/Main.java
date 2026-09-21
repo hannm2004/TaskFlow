@@ -17,7 +17,36 @@ import java.util.Set;
  */
 public class Main {
 
+    public static <T> void printValue(T value) {
+        System.out.println("Value: " + value);
+    }
+
+    public static <T extends Task> void printTask(T task) {
+        System.out.println(
+                task.getId()
+                + " | "
+                + task.getTitle()
+                + " | "
+                + task.getTaskType()
+        );
+    }
+
+    public static void testException() throws Exception {
+
+        throw new Exception("Test error");
+    }
+
     public static void main(String[] args) {
+        try {
+
+            testException();
+
+        } catch (Exception e) {
+
+            System.out.println(
+                    "Error: " + e.getMessage()
+            );
+        }
 
         List<Task> tasks = new ArrayList<>();
 
@@ -419,5 +448,128 @@ public class Main {
                     + entry.getValue()
             );
         }
+
+        System.out.println();
+        System.out.println("=== GENERICS BASIC ===");
+
+        List<String> usernames = new ArrayList<>();
+
+        usernames.add("han");
+        usernames.add("admin");
+        usernames.add("developer");
+
+        for (String username : usernames) {
+            System.out.println(username);
+        }
+
+        System.out.println();
+        System.out.println("=== GENERIC CLASS ===");
+
+        Box<String> stringBox = new Box<>("Hello TaskFlow");
+
+        System.out.println(
+                "String box: " + stringBox.getValue()
+        );
+
+        Box<Integer> integerBox = new Box<>(100);
+
+        System.out.println(
+                "Integer box: " + integerBox.getValue()
+        );
+
+        System.out.println();
+        System.out.println("=== GENERIC METHOD ===");
+
+        printValue("Hello TaskFlow");
+        printValue(100);
+        printValue(99.5);
+
+        System.out.println();
+        System.out.println("=== GENERIC TASK METHOD ===");
+
+        FeatureTask featureTask = new FeatureTask(
+                7001L,
+                "User Profile",
+                "Implement user profile",
+                "HIGH",
+                60,
+                "ACCOUNT"
+        );
+
+        BugTask genericBugTask = new BugTask(
+                7002L,
+                "Fix Login",
+                "Fix login error",
+                "URGENT",
+                40,
+                "CRITICAL"
+        );
+
+        printTask(featureTask);
+        printTask(genericBugTask);
+
+        System.out.println();
+        System.out.println("=== GENERIC REPOSITORY ===");
+
+        GenericRepository<Task> repository = new GenericRepository<>();
+
+        repository.add(task1);
+        repository.add(task2);
+        repository.add(bugTask);
+
+        for (Task item : repository.getAll()) {
+            System.out.println(
+                    item.getId()
+                    + " | "
+                    + item.getTitle()
+                    + " | "
+                    + item.getTaskType()
+            );
+        }
+
+        System.out.println();
+        System.out.println("=== EXCEPTION TEST ===");
+
+        Task exceptionTask = new FeatureTask(
+                8001L,
+                "Test Exception",
+                "Test exception handling",
+                "HIGH",
+                50,
+                "TEST"
+        );
+
+        try {
+
+            exceptionTask.setProgress(150);
+
+        } catch (InvalidTaskProgressException e) {
+
+            System.out.println(
+                    "Error: " + e.getMessage()
+            );
+
+        } finally {
+
+            System.out.println("Exception test finished");
+        }
+
+        System.out.println("Program continues...");
+
+        System.out.println();
+        System.out.println("=== CUSTOM EXCEPTION TEST ===");
+
+        try {
+
+            exceptionTask.setProgress(150);
+
+        } catch (InvalidTaskProgressException e) {
+
+            System.out.println(
+                    "Error: " + e.getMessage()
+            );
+        }
+
+        System.out.println("Program continues...");
     }
 }
