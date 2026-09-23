@@ -9,14 +9,17 @@
 * Java: JDK 21
 * Build tool: Maven
 * Main package: `com.taskflow`
+* Current branch: `feature/java-foundation`
 
 ---
 
-## Learning Roadmap
+# Learning Roadmap
 
+```text
 Java Foundation
 → Collections & Generics
 → Exceptions & Optional
+→ Lambda & Stream API
 → Maven
 → SQL / PostgreSQL
 → HTTP / REST
@@ -30,12 +33,38 @@ Java Foundation
 → Docker
 → CI/CD
 → Advanced / Microservices / Cloud
+```
 
 ---
 
-# Current Checkpoint
+# Current Progress
 
-## Java Foundation
+```text
+Java Foundation        ✅ Completed
+Collections            ✅ Completed
+Generics               ✅ Completed
+Exceptions             ✅ Completed
+Optional               ✅ Completed
+Lambda                 ✅ Completed
+Stream API             🔄 In Progress
+Maven                  ⏳ Later
+SQL / PostgreSQL       ⏳ Later
+HTTP / REST            ⏳ Later
+Spring Boot            ⏳ Later
+JPA / Hibernate        ⏳ Later
+DTO / Validation       ⏳ Later
+Security / JWT         ⏳ Later
+Testing                 ⏳ Later
+Redis                  ⏳ Later
+RabbitMQ               ⏳ Later
+Docker                 ⏳ Later
+CI/CD                  ⏳ Later
+Advanced / Cloud       ⏳ Later
+```
+
+---
+
+# Java Foundation
 
 * [x] Variables / Data Types
 * [x] Operators
@@ -52,7 +81,9 @@ Java Foundation
 * [x] Abstraction
 * [x] Interface
 
-## Collections
+---
+
+# Collections
 
 * [x] Collections
 
@@ -60,7 +91,41 @@ Java Foundation
   * [x] Set
   * [x] Map
 
-## Generics
+### List
+
+* [x] `ArrayList`
+* [x] `add()`
+* [x] `size()`
+* [x] `get()`
+* [x] `remove()`
+* [x] Searching Task by ID
+* [x] Iterating through List
+
+### Set
+
+* [x] `HashSet`
+* [x] `add()`
+* [x] `size()`
+* [x] `contains()`
+* [x] `remove()`
+* [x] Iterating through Set
+* [x] Duplicate prevention
+
+### Map
+
+* [x] `HashMap`
+* [x] `put()`
+* [x] `get()`
+* [x] `remove()`
+* [x] `containsKey()`
+* [x] `containsValue()`
+* [x] `Map.Entry`
+* [x] `entrySet()`
+* [x] Iterating through Map
+
+---
+
+# Generics
 
 * [x] Generic Type `<T>`
 * [x] Generic Class `Box<T>`
@@ -68,9 +133,17 @@ Java Foundation
 * [x] Generic Method `<T>`
 * [x] Bounded Generic `<T extends Task>`
 * [x] Generic Repository `GenericRepository<T>`
-* [x] Bounded Generic Repository `GenericRepository<T extends Task>`
+* [x] Bounded Generic Repository
 
-## Exceptions
+Example:
+
+```java
+public class GenericRepository<T extends Task>
+```
+
+---
+
+# Exceptions
 
 * [x] `try`
 * [x] `catch`
@@ -86,133 +159,417 @@ Java Foundation
 * [x] Exception handling in `GenericRepository`
 * [x] `findById()` with custom exception
 
-## Next Java Topics
-
-* [ ] Optional
-* [ ] Lambda
-* [ ] Stream API
-
 ---
 
-# Current Lesson
+# Optional
 
-## Java Exceptions — Completed
+## Status
 
-The Java Exception checkpoint has been completed.
+✅ Completed
 
-### Completed
+* [x] Why `null` can be problematic
+* [x] `Optional<T>`
+* [x] `Optional.of()`
+* [x] `Optional.ofNullable()`
+* [x] `Optional.empty()`
+* [x] `isPresent()`
+* [x] `orElse()`
+* [x] `orElseGet()`
+* [x] `orElseThrow()`
+* [x] Optional with Task
+* [x] Optional in Repository
+* [x] Optional `ifPresent()`
+* [x] Optional `map()`
+* [x] Optional `filter()`
+* [x] Optional `map()` + `filter()`
+* [x] `orElseThrow()` with Task
 
-* Learned the basic concept of Exception
-* Practiced `try-catch`
-* Practiced `finally`
-* Learned `throw`
-* Learned `throws`
-* Distinguished `throw` vs `throws`
-* Learned Checked Exception
-* Learned Unchecked Exception
-* Created Custom Exceptions for TaskFlow:
-
-  * `InvalidTaskProgressException`
-  * `TaskNotFoundException`
-* Applied `InvalidTaskProgressException` to `Task.setProgress()`
-* Applied `TaskNotFoundException` to `GenericRepository.findById()`
-* Practiced handling custom exceptions with `try-catch`
-* Practiced handling invalid Task progress
-* Practiced handling a Task that does not exist
-* Verified Exception flow with Maven
-
----
-
-# Exception Summary
-
-## `try`
-
-Code that may cause an Exception.
-
-```text
-try
-→ Code that may cause an Exception
-```
-
-## `catch`
-
-Catches and handles the Exception.
-
-```text
-catch
-→ Catches and handles the Exception
-```
-
-## `finally`
-
-Code that runs after `try/catch`.
-
-```text
-finally
-→ Code that runs after try/catch
-```
-
-## `throw`
-
-Actively throws an Exception.
-
-```text
-throw
-→ Actively throws an Exception
-```
-
-## `throws`
-
-Declares that a method may throw an Exception.
-
-```text
-throws
-→ Declares that a method may throw an Exception
-```
-
----
-
-# TaskFlow Custom Exceptions
-
-## `InvalidTaskProgressException`
-
-Used when Task progress is outside the valid range.
-
-```text
-progress < 0
-        OR
-progress > 100
-```
-
-Flow:
-
-```text
-Task.setProgress()
-        ↓
-Invalid progress
-        ↓
-throw InvalidTaskProgressException
-        ↓
-catch InvalidTaskProgressException
-        ↓
-Handle error
-```
-
----
-
-## `TaskNotFoundException`
-
-Used when a Task cannot be found by ID.
-
-Class:
+Current repository method:
 
 ```java
-public class TaskNotFoundException extends RuntimeException {
+public Optional<T> findOptionalById(long id)
+```
 
-    public TaskNotFoundException(String message) {
-        super(message);
-    }
-}
+---
+
+# Lambda
+
+## Status
+
+✅ Completed
+
+* [x] Lambda expression basic
+* [x] Lambda with one parameter
+* [x] Lambda with block body
+* [x] Lambda with `if`
+* [x] Lambda with Task
+* [x] `@FunctionalInterface`
+* [x] Custom functional interface `TaskAction`
+* [x] `Consumer<T>`
+* [x] `Predicate<T>`
+* [x] `Function<T, R>`
+* [x] Lambda with List
+* [x] Lambda with Task collection
+
+Example:
+
+```java
+tasks.forEach(
+        taskItem -> System.out.println(
+                taskItem.getTitle()
+        )
+);
+```
+
+---
+
+# Stream API
+
+## Status
+
+🔄 In Progress
+
+The Stream API has been practiced using the TaskFlow `tasks` collection.
+
+---
+
+## Basic Operations
+
+* [x] `stream()`
+* [x] `forEach()`
+* [x] `filter()`
+* [x] `map()`
+* [x] `sorted()`
+* [x] `distinct()`
+* [x] `limit()`
+
+---
+
+## Stream Combinations
+
+* [x] `filter()` + `sorted()`
+* [x] `filter()` + `sorted()` + `limit()`
+* [x] `filter()` + `map()`
+* [x] Stream + Lambda
+
+---
+
+## Collect Operations
+
+* [x] `Collectors.toList()`
+* [x] Collect filtered Tasks to List
+* [x] Collect Task titles to List
+* [x] `Collectors.toSet()`
+* [x] Collect Task Types to Set
+* [x] `Collectors.toMap()`
+* [x] Collect Task ID → Title to Map
+
+Example:
+
+```java
+Map<Long, String> taskTitleMap =
+        tasks.stream()
+                .collect(
+                        Collectors.toMap(
+                                taskItem -> taskItem.getId(),
+                                taskItem -> taskItem.getTitle()
+                        )
+                );
+```
+
+---
+
+## Counting Operations
+
+* [x] `count()`
+* [x] `filter()` + `count()`
+
+Example:
+
+```java
+long highProgressCount =
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 50
+                )
+                .count();
+```
+
+---
+
+## Matching Operations
+
+* [x] `anyMatch()`
+* [x] `allMatch()`
+* [x] `noneMatch()`
+
+### `anyMatch()`
+
+Checks whether at least one element satisfies the condition.
+
+```java
+boolean hasCompletedTask =
+        tasks.stream()
+                .anyMatch(
+                        taskItem -> taskItem.getProgress() == 100
+                );
+```
+
+Result:
+
+```text
+Has completed task: true
+```
+
+---
+
+### `allMatch()`
+
+Checks whether every element satisfies the condition.
+
+```java
+boolean allTasksCompleted =
+        tasks.stream()
+                .allMatch(
+                        taskItem -> taskItem.getProgress() == 100
+                );
+```
+
+Result:
+
+```text
+All tasks completed: false
+```
+
+---
+
+### `noneMatch()`
+
+Checks whether no element satisfies the condition.
+
+```java
+boolean hasNoCompletedTask =
+        tasks.stream()
+                .noneMatch(
+                        taskItem -> taskItem.getProgress() == 100
+                );
+```
+
+Current TaskFlow data contains a task with `100%` progress, therefore:
+
+```text
+No completed task: false
+```
+
+---
+
+# Finding Operations
+
+* [x] `findFirst()`
+* [x] `findFirst()` + `filter()`
+* [x] `findFirst()` + `Optional`
+* [x] `findFirst()` + `Optional.map()`
+* [x] `findFirst()` + `Optional.orElse()`
+* [x] `findAny()`
+* [x] `findAny()` + `filter()`
+
+Example:
+
+```java
+Optional<Task> firstHighProgressTask =
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 50
+                )
+                .findFirst();
+```
+
+Optional handling:
+
+```java
+String noCompletedTaskTitle
+        = noCompletedTask
+                .map(
+                        taskItem -> taskItem.getTitle()
+                )
+                .orElse("No task found");
+```
+
+---
+
+# Current Stream API Checkpoint
+
+Completed:
+
+```text
+Stream Basic                         ✅
+Filter                               ✅
+Map                                  ✅
+Sorted                               ✅
+Filter + Sorted                      ✅
+Distinct                             ✅
+Limit                                ✅
+Filter + Sorted + Limit              ✅
+Collect → List                       ✅
+Collect → Titles                     ✅
+Collect → Set                        ✅
+Collect → Map                        ✅
+Count                                ✅
+Count + Filter                       ✅
+anyMatch                             ✅
+allMatch                             ✅
+noneMatch                            ✅
+findFirst                            ✅
+findFirst + filter                   ✅
+findFirst + Optional                 ✅
+findAny                              ✅
+findAny + filter                     ✅
+```
+
+---
+
+# Latest Session — 2026-09-23
+
+Completed during this session:
+
+* [x] `findAny()`
+* [x] `findAny()` + `filter()`
+* [x] `noneMatch()`
+* [x] Fixed duplicate variable name `noCompletedTask`
+* [x] Renamed `noneMatch()` result variable to `hasNoCompletedTask`
+* [x] Successfully ran the project
+* [x] Verified `BUILD SUCCESS`
+
+Important lesson from the duplicate variable error:
+
+```text
+noCompletedTask
+→ Optional<Task>
+
+hasNoCompletedTask
+→ boolean
+```
+
+These variables represent different concepts and therefore should have different names.
+
+---
+
+# Current Stop Point
+
+## Stream API — Match & Find Operations
+
+Current completed point:
+
+```text
+noneMatch()
+        ↓
+BUILD SUCCESS
+        ↓
+STOP FOR TODAY
+```
+
+The project is currently paused here.
+
+---
+
+# Next Learning Session
+
+Continue from:
+
+```text
+Stream API
+```
+
+Do **not** restart Optional or Lambda.
+
+Next step should continue with the remaining useful Stream API concepts, one small concept at a time.
+
+After the Stream API checkpoint is completed:
+
+```text
+Stream API
+    ↓
+Verify all exercises
+    ↓
+git status
+    ↓
+git diff
+    ↓
+mvn clean compile
+    ↓
+Commit Stream checkpoint
+    ↓
+Push origin/feature/java-foundation
+    ↓
+Update PROGRESS.md
+```
+
+Then move to:
+
+```text
+Maven
+```
+
+---
+
+# Important Project Files
+
+```text
+src/main/java/com/taskflow/
+
+├── Main.java
+├── Task.java
+├── FeatureTask.java
+├── BugTask.java
+├── ImprovementTask.java
+├── Assignable.java
+├── Box.java
+├── GenericRepository.java
+├── InvalidTaskProgressException.java
+├── TaskNotFoundException.java
+└── TaskAction.java
+```
+
+---
+
+# TaskFlow Domain Model
+
+```text
+                    Task
+                     │
+        ┌────────────┼────────────┐
+        ↓            ↓            ↓
+ FeatureTask      BugTask    ImprovementTask
+        │            │
+        └────── Assignable ──────┘
+```
+
+`Task`:
+
+```text
+id
+title
+description
+priority
+progress
+```
+
+`FeatureTask`:
+
+```text
+featureCategory
+```
+
+`BugTask`:
+
+```text
+bugSeverity
+```
+
+`ImprovementTask`:
+
+```text
+improvementArea
 ```
 
 ---
@@ -247,353 +604,24 @@ public class GenericRepository<T extends Task> {
                 "Task with ID " + id + " not found"
         );
     }
+
+    public Optional<T> findOptionalById(long id) {
+
+        for (T item : items) {
+
+            if (item.getId() == id) {
+                return Optional.of(item);
+            }
+        }
+
+        return Optional.empty();
+    }
 }
 ```
 
-## `findById()` Flow
-
-```text
-repository.findById(id)
-        ↓
-Loop through Task list
-        ↓
-Check item.getId()
-        ↓
-ID found?
-   ↙           ↘
- YES            NO
-  ↓              ↓
-return item    throw
-               TaskNotFoundException
-```
-
-Example:
-
-```java
-Task repositoryTask = repository.findById(1001L);
-```
-
-If the Task exists:
-
-```text
-Found task: Implement Login
-```
-
-If the Task does not exist:
-
-```java
-repository.findById(9999L);
-```
-
-Result:
-
-```text
-Error: Task with ID 9999 not found
-```
-
 ---
 
-# Collections Summary
-
-## List
-
-* Ordered collection
-* Allows duplicate elements
-* Practiced `ArrayList`
-* Practiced `add()`
-* Practiced `size()`
-* Practiced `get()`
-* Practiced `remove()`
-* Practiced searching for a Task by ID
-* Practiced iterating through a List
-
-Example:
-
-```java
-List<Task> taskList = new ArrayList<>();
-```
-
----
-
-## Set
-
-* Collection that does not allow duplicate elements
-* Practiced `HashSet`
-* Practiced `add()`
-* Practiced `size()`
-* Practiced `contains()`
-* Practiced `remove()`
-* Practiced iterating through Set
-
-Example:
-
-```java
-Set<String> tags = new HashSet<>();
-```
-
----
-
-## Map
-
-* Stores data as `key -> value`
-* Practiced `HashMap`
-* Practiced `put()`
-* Practiced `get()`
-* Practiced `remove()`
-* Practiced `containsKey()`
-* Practiced `containsValue()`
-* Practiced `Map.Entry`
-* Practiced `entrySet()`
-* Practiced iterating through Map
-
-Example:
-
-```java
-Map<Long, String> taskMap = new HashMap<>();
-```
-
----
-
-# Generics Summary
-
-## Generic Type
-
-Generic types allow classes and methods to work with different data types.
-
-Example:
-
-```java
-List<String>
-List<Task>
-```
-
----
-
-## Generic Class
-
-`Box<T>` can work with different data types.
-
-```java
-Box<String>
-Box<Integer>
-```
-
-Example:
-
-```java
-Box<String> stringBox = new Box<>("Hello TaskFlow");
-
-Box<Integer> integerBox = new Box<>(100);
-```
-
----
-
-## Diamond Operator
-
-```java
-new ArrayList<>()
-```
-
-The compiler can infer the generic type.
-
----
-
-## Generic Method
-
-```java
-public static <T> void printValue(T value) {
-    System.out.println("Value: " + value);
-}
-```
-
-The method can accept different types.
-
-Examples:
-
-```java
-printValue("Hello TaskFlow");
-printValue(100);
-printValue(99.5);
-```
-
----
-
-## Bounded Generic
-
-```java
-<T extends Task>
-```
-
-The generic type must be `Task` or a subclass of `Task`.
-
----
-
-## Generic Repository
-
-```java
-GenericRepository<Task> repository =
-        new GenericRepository<>();
-```
-
-The repository stores Task objects using:
-
-```java
-List<T>
-```
-
-The repository is restricted to:
-
-```java
-GenericRepository<T extends Task>
-```
-
-This ensures that `T` must be a `Task` or subclass of `Task`.
-
----
-
-# Java OOP Summary
-
-## Class & Object
-
-* Created classes
-* Created objects
-* Practiced object interaction
-
-## Constructor
-
-* Created constructors
-* Initialized object state through constructors
-
-## Encapsulation
-
-* Used `private` fields
-* Used getters
-* Used setters
-* Added validation inside setters
-
-## Inheritance
-
-* Used `extends`
-* Created subclasses from `Task`
-
-Examples:
-
-```text
-Task
-├── FeatureTask
-├── BugTask
-└── ImprovementTask
-```
-
-## Polymorphism
-
-Used:
-
-```java
-Task task = new BugTask(...);
-```
-
-The reference type is `Task`, while the actual object is `BugTask`.
-
-## Abstraction
-
-`Task` is an abstract class.
-
-## Interface
-
-Created:
-
-```java
-public interface Assignable {
-    void assignTo(String username);
-}
-```
-
-Implemented by:
-
-```text
-FeatureTask
-BugTask
-```
-
----
-
-# TaskFlow Domain Model
-
-Current basic Task hierarchy:
-
-```text
-                    Task
-                     │
-        ┌────────────┼────────────┐
-        ↓            ↓            ↓
- FeatureTask      BugTask    ImprovementTask
-        │            │
-        └────── Assignable ──────┘
-```
-
-`Task` contains common information:
-
-```text
-id
-title
-description
-priority
-progress
-```
-
-`FeatureTask` adds:
-
-```text
-featureCategory
-```
-
-`BugTask` adds:
-
-```text
-bugSeverity
-```
-
-`ImprovementTask` adds:
-
-```text
-improvementArea
-```
-
----
-
-# Important Project Files
-
-Current important classes:
-
-```text
-src/main/java/com/taskflow/
-
-├── Main.java
-├── Task.java
-├── FeatureTask.java
-├── BugTask.java
-├── ImprovementTask.java
-├── Assignable.java
-├── Box.java
-├── GenericRepository.java
-├── InvalidTaskProgressException.java
-└── TaskNotFoundException.java
-```
-
----
-
-# Git
-
-## Branch Strategy
-
-Current branch:
-
-```text
-feature/java-foundation
-```
-
-Branch roles:
+# Git Branch Strategy
 
 ```text
 main
@@ -606,46 +634,15 @@ feature/*
 → individual learning / feature branches
 ```
 
----
-
-## Latest Checkpoints
-
-Completed checkpoints include:
-
-* `feat: practice task list collections`
-* `feat: practice set collections`
-* `feat: practice map collections`
-* `docs: update TaskFlow learning progress`
-* `feat: practice generics and custom exceptions`
-* Exception handling practice
-* `TaskNotFoundException`
-* `GenericRepository.findById()`
-
----
-
-## Current Git State
-
-Expected branch:
+Current branch:
 
 ```text
 feature/java-foundation
 ```
 
-The Java Foundation learning branch contains the completed:
-
-```text
-Java Foundation
-        ↓
-Collections
-        ↓
-Generics
-        ↓
-Exceptions
-```
-
 ---
 
-# Working Tree Checklist
+# Git Verification
 
 Before committing:
 
@@ -653,7 +650,7 @@ Before committing:
 git status
 ```
 
-Check changed code:
+Review changes:
 
 ```powershell
 git diff
@@ -665,31 +662,31 @@ Compile:
 mvn clean compile
 ```
 
-Run application:
+Run:
 
 ```powershell
 mvn exec:java "-Dexec.mainClass=com.taskflow.Main"
 ```
 
-Check status again:
-
-```powershell
-git status
-```
-
-Review changes:
+Review:
 
 ```powershell
 git diff --stat
 ```
 
+Then commit and push only after verification.
+
 ---
 
-# Standard Verification Flow
+# Standard Learning Flow
 
-For each new TaskFlow lesson:
+For every TaskFlow lesson:
 
 ```text
+Learn concept
+    ↓
+Understand concept
+    ↓
 Write code
     ↓
 Run application
@@ -698,7 +695,7 @@ Check output
     ↓
 Test normal case
     ↓
-Test error / edge case
+Test edge case
     ↓
 git status
     ↓
@@ -713,96 +710,65 @@ Push
 
 ---
 
-# Current Progress
+# Learning Principle
+
+TaskFlow is both:
 
 ```text
-Java Foundation        ✅ Completed
-Collections            ✅ Completed
-Generics               ✅ Completed
-Exceptions             ✅ Completed
-
-Optional               ⏳ Next
-Lambda                 ⏳ Later
-Stream API             ⏳ Later
-Maven                  ⏳ Later
-SQL / PostgreSQL       ⏳ Later
-HTTP / REST            ⏳ Later
-Spring Boot            ⏳ Later
-JPA / Hibernate        ⏳ Later
-DTO / Validation       ⏳ Later
-Security / JWT         ⏳ Later
-Testing                ⏳ Later
-Redis                  ⏳ Later
-RabbitMQ               ⏳ Later
-Docker                 ⏳ Later
-CI/CD                  ⏳ Later
-Advanced / Cloud       ⏳ Later
+Learning Project
++
+Java Backend Portfolio Project
 ```
 
----
+The goal is not simply to make the application run.
 
-# Current Stop Point
-
-## Java Exception Checkpoint — COMPLETED
-
-Completed:
+Each stage should build practical backend knowledge:
 
 ```text
-try
-catch
-finally
-throw
-throws
-Checked Exception
-Unchecked Exception
-Custom Exception
-InvalidTaskProgressException
-TaskNotFoundException
-GenericRepository.findById()
-Exception handling practice
+Java
+ ↓
+OOP
+ ↓
+Collections
+ ↓
+Generics
+ ↓
+Exceptions
+ ↓
+Optional
+ ↓
+Lambda
+ ↓
+Stream API
+ ↓
+Maven
+ ↓
+SQL / PostgreSQL
+ ↓
+HTTP / REST
+ ↓
+Spring Boot
+ ↓
+JPA / Hibernate
+ ↓
+DTO / Validation
+ ↓
+Security / JWT
+ ↓
+Testing
+ ↓
+Redis
+ ↓
+RabbitMQ
+ ↓
+Docker
+ ↓
+CI/CD
+ ↓
+Advanced / Microservices / Cloud
+ ↓
+Backend Portfolio
 ```
-
----
-
-# Next Learning Checkpoint
-
-## Optional
-
-The next topic is:
-
-```text
-Java Optional
-```
-
-Learning direction:
-
-```text
-Why null can be problematic
-        ↓
-Optional<T>
-        ↓
-Optional.of()
-        ↓
-Optional.ofNullable()
-        ↓
-Optional.empty()
-        ↓
-isPresent()
-        ↓
-orElse()
-        ↓
-orElseGet()
-        ↓
-orElseThrow()
-        ↓
-Optional with Task
-        ↓
-Optional in Repository
-```
-
-The next lesson should be learned one small concept at a time.
-
-Do not skip directly to Lambda or Stream API before completing the Optional checkpoint.
 
 ---
 
@@ -818,82 +784,45 @@ Then:
 
 1. Check the current Git status.
 2. Check the latest Git log.
-3. Read `PROGRESS.md` if needed.
-4. Continue from the current checkpoint.
+3. Read `PROGRESS.md` if necessary.
+4. Continue from the latest checkpoint.
 5. Do not restart completed lessons.
-6. Keep learning flexible by milestone/checkpoint, not fixed calendar days.
+6. Learn flexibly by milestone/checkpoint rather than fixed calendar days.
 7. Learn one small concept at a time.
-8. Run and verify each exercise before moving to the next concept.
+8. Run and verify each exercise before moving forward.
 9. Keep meaningful Git commits.
 10. Push completed checkpoints to `origin/feature/java-foundation`.
 
 ---
 
-# Learning Principle
-
-TaskFlow is being developed as both:
+# Latest Checkpoint Summary
 
 ```text
-Learning Project
-+
-Java Backend Portfolio Project
+Java Foundation        ✅
+Collections            ✅
+Generics               ✅
+Exceptions             ✅
+Optional               ✅
+Lambda                 ✅
+Stream API             🔄
+                         ↑
+                    CURRENT
 ```
 
-The goal is not only to make the program run.
-
-Each checkpoint should build understanding of:
+Today's stopping point:
 
 ```text
-Java fundamentals
-        ↓
-Object-Oriented Programming
-        ↓
-Collections
-        ↓
-Generics
-        ↓
-Exception Handling
-        ↓
-Maven
-        ↓
-SQL / PostgreSQL
-        ↓
-HTTP / REST
-        ↓
-Spring Boot
-        ↓
-Database / JPA
-        ↓
-Security
-        ↓
-Testing
-        ↓
-Docker
-        ↓
-CI/CD
-        ↓
-Backend Portfolio
+Stream API
+→ findAny()
+→ findAny() + filter()
+→ noneMatch()
+→ BUILD SUCCESS
 ```
 
----
-
-# Latest Session Summary
-
-Completed in the current Exception checkpoint:
-
-* Created `TaskNotFoundException`
-* Extended `RuntimeException`
-* Added `findById(long id)` to `GenericRepository<T extends Task>`
-* Returned the Task when the ID exists
-* Threw `TaskNotFoundException` when the ID does not exist
-* Handled `TaskNotFoundException` in `Main`
-* Tested an existing Task ID
-* Tested a non-existing Task ID
-* Fixed duplicate `foundTask` variable issue
-* Verified the project compiles and runs
-
-Current next step:
+Next time:
 
 ```text
-Optional
+Tiếp tục Stream API
 ```
+
+Do not restart from the beginning.

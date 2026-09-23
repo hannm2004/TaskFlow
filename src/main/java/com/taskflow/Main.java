@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -714,6 +718,584 @@ public class Main {
 
         System.out.println(
                 "Result: " + mapFilterResult
+        );
+
+        System.out.println();
+        System.out.println("=== LAMBDA BASIC ===");
+
+        List<String> lambdaUsers = new ArrayList<>();
+
+        lambdaUsers.add("han");
+        lambdaUsers.add("admin");
+        lambdaUsers.add("developer");
+
+        lambdaUsers.forEach(
+                user -> System.out.println("User: " + user)
+        );
+
+        System.out.println();
+        System.out.println("=== LAMBDA BLOCK ===");
+
+        lambdaUsers.forEach(
+                user -> {
+                    System.out.println("Processing...");
+                    System.out.println("Username: " + user);
+                }
+        );
+
+        System.out.println();
+        System.out.println("=== LAMBDA IF ===");
+
+        lambdaUsers.forEach(
+                user -> {
+                    if (user.length() > 4) {
+                        System.out.println(
+                                "Long username: " + user
+                        );
+                    }
+                }
+        );
+
+        System.out.println();
+        System.out.println("=== LAMBDA TASK ===");
+
+        tasks.forEach(
+                taskItem -> {
+                    System.out.println(
+                            taskItem.getId()
+                            + " | "
+                            + taskItem.getTitle()
+                            + " | "
+                            + taskItem.getProgress()
+                            + "%"
+                    );
+                }
+        );
+
+        System.out.println();
+        System.out.println("=== FUNCTIONAL INTERFACE ===");
+
+        TaskAction printTaskAction = taskItem -> {
+            System.out.println(
+                    taskItem.getId()
+                    + " | "
+                    + taskItem.getTitle()
+            );
+        };
+
+        printTaskAction.execute(task1);
+        TaskAction printTaskTypeAction = taskItem -> {
+            System.out.println(
+                    "Type: " + taskItem.getTaskType()
+            );
+        };
+
+        printTaskTypeAction.execute(task1);
+
+        System.out.println();
+        System.out.println("=== CONSUMER BASIC ===");
+
+        Consumer<String> userConsumer
+                = user -> System.out.println(
+                        "Processing user: " + user
+                );
+
+        userConsumer.accept("han");
+        userConsumer.accept("admin");
+
+        System.out.println();
+        System.out.println("=== CONSUMER TASK ===");
+
+        Consumer<Task> taskConsumer
+                = taskItem -> {
+                    System.out.println(
+                            taskItem.getId()
+                            + " | "
+                            + taskItem.getTitle()
+                            + " | "
+                            + taskItem.getTaskType()
+                    );
+                };
+
+        taskConsumer.accept(task1);
+        taskConsumer.accept(task2);
+        taskConsumer.accept(bugTask);
+
+        System.out.println();
+        System.out.println("=== CONSUMER TASK LIST ===");
+
+        Consumer<Task> taskInfoConsumer
+                = taskItem -> {
+                    System.out.println(
+                            "Task: " + taskItem.getTitle()
+                            + " | Progress: "
+                            + taskItem.getProgress()
+                            + "%"
+                    );
+                };
+
+        tasks.forEach(taskInfoConsumer);
+
+        System.out.println();
+        System.out.println("=== PREDICATE BASIC ===");
+
+        Predicate<Integer> isHighNumber
+                = number -> number >= 80;
+
+        System.out.println(
+                "90 >= 80: " + isHighNumber.test(90)
+        );
+
+        System.out.println(
+                "50 >= 80: " + isHighNumber.test(50)
+        );
+
+        System.out.println();
+        System.out.println("=== PREDICATE TASK ===");
+
+        Predicate<Task> isHighProgress
+                = taskItem -> taskItem.getProgress() >= 80;
+
+        System.out.println(
+                "Task 1001 high progress: "
+                + isHighProgress.test(task1)
+        );
+
+        System.out.println(
+                "Task 1003 high progress: "
+                + isHighProgress.test(bugTask)
+        );
+
+        System.out.println();
+        System.out.println("=== PREDICATE TASK LIST ===");
+
+        Predicate<Task> progressCondition
+                = taskItem -> taskItem.getProgress() >= 50;
+
+        tasks.forEach(
+                taskItem -> {
+                    if (progressCondition.test(taskItem)) {
+                        System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        );
+                    }
+                }
+        );
+
+        System.out.println();
+        System.out.println("=== FUNCTION BASIC ===");
+
+        Function<String, Integer> stringLength
+                = text -> text.length();
+
+        System.out.println(
+                "Length of TaskFlow: "
+                + stringLength.apply("TaskFlow")
+        );
+
+        System.out.println(
+                "Length of Java: "
+                + stringLength.apply("Java")
+        );
+
+        System.out.println();
+        System.out.println("=== FUNCTION TASK ===");
+
+        Function<Task, String> taskTitleFunction
+                = taskItem -> taskItem.getTitle();
+
+        System.out.println(
+                "Task title: "
+                + taskTitleFunction.apply(task1)
+        );
+
+        System.out.println(
+                "Task title: "
+                + taskTitleFunction.apply(bugTask)
+        );
+
+        System.out.println();
+        System.out.println("=== FUNCTION TASK LIST ===");
+
+        Function<Task, String> taskTitleMapper
+                = taskItem -> taskItem.getTitle();
+
+        for (Task item : tasks) {
+
+            String title = taskTitleMapper.apply(item);
+
+            System.out.println(
+                    "Title: " + title
+            );
+        }
+
+        System.out.println();
+        System.out.println("=== STREAM BASIC ===");
+
+        tasks.stream()
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM FILTER ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 50
+                )
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM MAP ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 50
+                )
+                .map(
+                        taskItem -> taskItem.getTitle()
+                )
+                .forEach(
+                        title -> System.out.println(
+                                "Title: " + title
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM SORTED ===");
+
+        tasks.stream()
+                .sorted(
+                        (taskA, taskB)
+                        -> Integer.compare(
+                                taskA.getProgress(),
+                                taskB.getProgress()
+                        )
+                )
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM FILTER SORTED ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 30
+                )
+                .sorted(
+                        (taskA, taskB)
+                        -> Integer.compare(
+                                taskA.getProgress(),
+                                taskB.getProgress()
+                        )
+                )
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM DISTINCT ===");
+
+        List<String> streamTags = new ArrayList<>();
+
+        streamTags.add("java");
+        streamTags.add("spring");
+        streamTags.add("java");
+        streamTags.add("docker");
+        streamTags.add("spring");
+        streamTags.add("java");
+
+        streamTags.stream()
+                .distinct()
+                .forEach(
+                        tag -> System.out.println(
+                                "Tag: " + tag
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM LIMIT ===");
+
+        tasks.stream()
+                .limit(3)
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM FILTER SORTED LIMIT ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 30
+                )
+                .sorted(
+                        (taskA, taskB)
+                        -> Integer.compare(
+                                taskA.getProgress(),
+                                taskB.getProgress()
+                        )
+                )
+                .limit(3)
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM COLLECT TO LIST ===");
+
+        List<Task> highProgressTasks
+                = tasks.stream()
+                        .filter(
+                                taskItem -> taskItem.getProgress() >= 50
+                        )
+                        .collect(Collectors.toList());
+
+        for (Task item : highProgressTasks) {
+            System.out.println(
+                    item.getTitle()
+                    + " | "
+                    + item.getProgress()
+                    + "%"
+            );
+        }
+
+        System.out.println();
+        System.out.println("=== STREAM COLLECT TITLES ===");
+
+        List<String> highProgressTitles
+                = tasks.stream()
+                        .filter(
+                                taskItem -> taskItem.getProgress() >= 50
+                        )
+                        .map(
+                                taskItem -> taskItem.getTitle()
+                        )
+                        .collect(Collectors.toList());
+
+        for (String title : highProgressTitles) {
+            System.out.println(
+                    "Title: " + title
+            );
+        }
+
+        System.out.println();
+        System.out.println("=== STREAM COLLECT TO SET ===");
+
+        Set<String> taskTypes
+                = tasks.stream()
+                        .map(
+                                taskItem -> taskItem.getTaskType()
+                        )
+                        .collect(Collectors.toSet());
+
+        for (String type : taskTypes) {
+            System.out.println(
+                    "Type: " + type
+            );
+        }
+
+        System.out.println();
+        System.out.println("Total task types: " + taskTypes.size());
+
+        System.out.println();
+        System.out.println("=== STREAM COLLECT TO MAP ===");
+
+        Map<Long, String> taskTitleMap
+                = tasks.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        taskItem -> taskItem.getId(),
+                                        taskItem -> taskItem.getTitle()
+                                )
+                        );
+
+        taskTitleMap.forEach(
+                (taskId, title)
+                -> System.out.println(
+                        taskId + " -> " + title
+                )
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM COUNT ===");
+
+        long taskCount
+                = tasks.stream()
+                        .count();
+
+        System.out.println(
+                "Total tasks: " + taskCount
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM COUNT FILTER ===");
+
+        long highProgressCount
+                = tasks.stream()
+                        .filter(
+                                taskItem -> taskItem.getProgress() >= 50
+                        )
+                        .count();
+
+        System.out.println(
+                "High progress tasks: "
+                + highProgressCount
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM ANY MATCH ===");
+
+        boolean hasCompletedTask
+                = tasks.stream()
+                        .anyMatch(
+                                taskItem -> taskItem.getProgress() == 100
+                        );
+
+        System.out.println(
+                "Has completed task: " + hasCompletedTask
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM ALL MATCH ===");
+
+        boolean allTasksCompleted
+                = tasks.stream()
+                        .allMatch(
+                                taskItem -> taskItem.getProgress() == 100
+                        );
+
+        System.out.println(
+                "All tasks completed: " + allTasksCompleted
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM FIND FIRST ===");
+
+        Optional<Task> firstStreamTask
+                = tasks.stream()
+                        .findFirst();
+
+        System.out.println(
+                "First task: "
+                + firstStreamTask.get().getTitle()
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM FIND FIRST FILTER ===");
+
+        Optional<Task> firstHighProgressTask
+                = tasks.stream()
+                        .filter(
+                                taskItem -> taskItem.getProgress() >= 50
+                        )
+                        .findFirst();
+
+        System.out.println(
+                "First high progress task: "
+                + firstHighProgressTask.get().getTitle()
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM FIND FIRST OPTIONAL ===");
+
+        Optional<Task> noCompletedTask
+                = tasks.stream()
+                        .filter(
+                                taskItem -> taskItem.getProgress() > 100
+                        )
+                        .findFirst();
+
+        System.out.println(
+                "Found task: " + noCompletedTask.isPresent()
+        );
+
+        String noCompletedTaskTitle
+                = noCompletedTask
+                        .map(
+                                taskItem -> taskItem.getTitle()
+                        )
+                        .orElse("No task found");
+
+        System.out.println(
+                "Task title: " + noCompletedTaskTitle
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM FIND ANY ===");
+
+        Optional<Task> anyTask
+                = tasks.stream()
+                        .findAny();
+
+        System.out.println(
+                "Any task: "
+                + anyTask.map(
+                        taskItem -> taskItem.getTitle()
+                ).orElse("No task found")
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM FIND ANY FILTER ===");
+
+        Optional<Task> anyHighProgressTask
+                = tasks.stream()
+                        .filter(
+                                taskItem -> taskItem.getProgress() >= 50
+                        )
+                        .findAny();
+
+        System.out.println(
+                "Any high progress task: "
+                + anyHighProgressTask
+                        .map(
+                                taskItem -> taskItem.getTitle()
+                        )
+                        .orElse("No task found")
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM NONE MATCH ===");
+
+        boolean hasNoCompletedTask
+                = tasks.stream()
+                        .noneMatch(
+                                taskItem -> taskItem.getProgress() == 100
+                        );
+
+        System.out.println(
+                "No completed task: " + hasNoCompletedTask
         );
     }
 }
