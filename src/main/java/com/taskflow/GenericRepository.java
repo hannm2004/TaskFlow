@@ -6,6 +6,7 @@ package com.taskflow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -21,5 +22,31 @@ public class GenericRepository<T extends Task> {
 
     public List<T> getAll() {
         return items;
+    }
+
+    public T findById(long id) {
+
+        for (T item : items) {
+
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+
+        throw new TaskNotFoundException(
+                "Task with ID " + id + " not found"
+        );
+    }
+
+    public Optional<T> findOptionalById(long id) {
+
+        for (T item : items) {
+
+            if (item.getId() == id) {
+                return Optional.of(item);
+            }
+        }
+
+        return Optional.empty();
     }
 }

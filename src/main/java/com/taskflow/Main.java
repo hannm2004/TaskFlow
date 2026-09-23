@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -557,19 +558,162 @@ public class Main {
         System.out.println("Program continues...");
 
         System.out.println();
-        System.out.println("=== CUSTOM EXCEPTION TEST ===");
+        System.out.println("=== FIND TASK BY ID ===");
 
         try {
 
-            exceptionTask.setProgress(150);
+            Task repositoryTask = repository.findById(1001L);
 
-        } catch (InvalidTaskProgressException e) {
+            System.out.println(
+                    "Found task: "
+                    + repositoryTask.getTitle()
+            );
+
+        } catch (TaskNotFoundException e) {
 
             System.out.println(
                     "Error: " + e.getMessage()
             );
         }
 
-        System.out.println("Program continues...");
+        System.out.println();
+        System.out.println("=== OPTIONAL BASIC ===");
+
+        String username = "han";
+
+        Optional<String> optionalUsername
+                = Optional.of(username);
+
+        System.out.println(
+                "Username: " + optionalUsername.get()
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL EMPTY ===");
+
+        Optional<String> emptyUsername
+                = Optional.empty();
+
+        System.out.println(
+                "Is username present: "
+                + emptyUsername.isPresent()
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL OR ELSE GET ===");
+
+        Optional<String> optionalGuest
+                = Optional.empty();
+
+        String guestResult
+                = optionalGuest.orElseGet(() -> "Guest");
+
+        System.out.println(
+                "Username: " + guestResult
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL TASK ===");
+
+        Optional<Task> optionalTask
+                = repository.findOptionalById(1001L);
+
+        System.out.println(
+                "Task found: "
+                + optionalTask.isPresent()
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL TASK NOT FOUND ===");
+
+        Optional<Task> missingTask
+                = repository.findOptionalById(9999L);
+
+        System.out.println(
+                "Task found: "
+                + missingTask.isPresent()
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL OR ELSE THROW TASK ===");
+
+        Task existingTask
+                = repository
+                        .findOptionalById(1001L)
+                        .orElseThrow(
+                                () -> new TaskNotFoundException(
+                                        "Task not found"
+                                )
+                        );
+
+        System.out.println(
+                "Task: " + existingTask.getTitle()
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL IF PRESENT ===");
+
+        Optional<Task> taskForIfPresent
+                = repository.findOptionalById(1001L);
+
+        taskForIfPresent.ifPresent(
+                optionalIfPresentTask -> System.out.println(
+                        "Task title: " + optionalIfPresentTask.getTitle()
+                )
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL MAP ===");
+
+        Optional<Task> taskForMap
+                = repository.findOptionalById(1001L);
+
+        Optional<String> taskTitle
+                = taskForMap.map(
+                        optionalMapTask -> optionalMapTask.getTitle()
+                );
+
+        System.out.println(
+                "Task title: " + taskTitle.orElse("Unknown")
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL FILTER ===");
+
+        Optional<Task> taskForFilter
+                = repository.findOptionalById(1003L);
+
+        Optional<Task> highProgressTask
+                = taskForFilter.filter(
+                        optionalFilterTask
+                        -> optionalFilterTask.getProgress() >= 80
+                );
+
+        System.out.println(
+                "High progress task: "
+                + highProgressTask.isPresent()
+        );
+
+        System.out.println();
+        System.out.println("=== OPTIONAL MAP AND FILTER ===");
+
+        Optional<Task> taskForMapFilter
+                = repository.findOptionalById(1003L);
+
+        String mapFilterResult
+                = taskForMapFilter
+                        .filter(
+                                optionalMapFilterTask
+                                -> optionalMapFilterTask.getProgress() >= 80
+                        )
+                        .map(
+                                optionalMapFilterTask
+                                -> optionalMapFilterTask.getTitle()
+                        )
+                        .orElse("Task does not meet condition");
+
+        System.out.println(
+                "Result: " + mapFilterResult
+        );
     }
 }
