@@ -5,6 +5,7 @@
 package com.taskflow;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1297,5 +1298,336 @@ public class Main {
         System.out.println(
                 "No completed task: " + hasNoCompletedTask
         );
+
+        System.out.println();
+        System.out.println("=== STREAM SKIP ===");
+
+        tasks.stream()
+                .skip(3)
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM FILTER SORTED SKIP LIMIT ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 30
+                )
+                .sorted(
+                        (taskA, taskB)
+                        -> Integer.compare(
+                                taskA.getProgress(),
+                                taskB.getProgress()
+                        )
+                )
+                .skip(1)
+                .limit(2)
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM PEEK ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 50
+                )
+                .peek(
+                        taskItem -> System.out.println(
+                                "After filter: "
+                                + taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                )
+                .map(
+                        taskItem -> taskItem.getTitle()
+                )
+                .forEach(
+                        title -> System.out.println(
+                                "Title: " + title
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM REDUCE ===");
+
+        int totalProgress
+                = tasks.stream()
+                        .map(
+                                taskItem -> taskItem.getProgress()
+                        )
+                        .reduce(
+                                0,
+                                (total, progress)
+                                -> total + progress
+                        );
+
+        System.out.println(
+                "Total progress: " + totalProgress
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM REDUCE MAX ===");
+
+        int maxProgress
+                = tasks.stream()
+                        .map(
+                                taskItem -> taskItem.getProgress()
+                        )
+                        .reduce(
+                                0,
+                                (max, progress)
+                                -> Math.max(max, progress)
+                        );
+
+        System.out.println(
+                "Max progress: " + maxProgress + "%"
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM MIN MAX ===");
+
+        Optional<Task> minProgressTask
+                = tasks.stream()
+                        .min(
+                                (taskA, taskB)
+                                -> Integer.compare(
+                                        taskA.getProgress(),
+                                        taskB.getProgress()
+                                )
+                        );
+
+        Optional<Task> maxProgressTask
+                = tasks.stream()
+                        .max(
+                                (taskA, taskB)
+                                -> Integer.compare(
+                                        taskA.getProgress(),
+                                        taskB.getProgress()
+                                )
+                        );
+
+        System.out.println(
+                "Min progress task: "
+                + minProgressTask
+                        .map(taskItem -> taskItem.getTitle())
+                        .orElse("No task found")
+        );
+
+        System.out.println(
+                "Max progress task: "
+                + maxProgressTask
+                        .map(taskItem -> taskItem.getTitle())
+                        .orElse("No task found")
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM GROUPING BY ===");
+
+        Map<String, List<Task>> tasksByType
+                = tasks.stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        taskItem -> taskItem.getTaskType()
+                                )
+                        );
+
+        tasksByType.forEach(
+                (type, groupedTasks) -> {
+                    System.out.println("Type: " + type);
+
+                    groupedTasks.forEach(
+                            taskItem -> System.out.println(
+                                    "  - "
+                                    + taskItem.getTitle()
+                                    + " | "
+                                    + taskItem.getProgress()
+                                    + "%"
+                            )
+                    );
+                }
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM GROUPING BY COUNTING ===");
+
+        Map<String, Long> taskCountByType
+                = tasks.stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        taskItem -> taskItem.getTaskType(),
+                                        Collectors.counting()
+                                )
+                        );
+
+        taskCountByType.forEach(
+                (type, count)
+                -> System.out.println(
+                        type + " | " + count + " task(s)"
+                )
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM GROUPING BY AVERAGING ===");
+
+        Map<String, Double> averageProgressByType
+                = tasks.stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        taskItem -> taskItem.getTaskType(),
+                                        Collectors.averagingInt(
+                                                taskItem -> taskItem.getProgress()
+                                        )
+                                )
+                        );
+
+        averageProgressByType.forEach(
+                (type, averageProgress)
+                -> System.out.println(
+                        type
+                        + " | Average progress: "
+                        + averageProgress
+                        + "%"
+                )
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM PARTITIONING BY ===");
+
+        Map<Boolean, List<Task>> tasksByProgress
+                = tasks.stream()
+                        .collect(
+                                Collectors.partitioningBy(
+                                        taskItem -> taskItem.getProgress() >= 50
+                                )
+                        );
+
+        System.out.println("Tasks with progress >= 50%:");
+
+        tasksByProgress.get(true)
+                .forEach(
+                        taskItem -> System.out.println(
+                                "  - "
+                                + taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println("Tasks with progress < 50%:");
+
+        tasksByProgress.get(false)
+                .forEach(
+                        taskItem -> System.out.println(
+                                "  - "
+                                + taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM GROUPING BY SUMMING ===");
+
+        Map<String, Integer> totalProgressByType
+                = tasks.stream()
+                        .collect(
+                                Collectors.groupingBy(
+                                        taskItem -> taskItem.getTaskType(),
+                                        Collectors.summingInt(
+                                                taskItem -> taskItem.getProgress()
+                                        )
+                                )
+                        );
+
+        totalProgressByType.forEach(
+                (type, sumProgress)
+                -> System.out.println(
+                        type
+                        + " | Total progress: "
+                        + sumProgress
+                        + "%"
+                )
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM JOINING ===");
+
+        String taskTitles
+                = tasks.stream()
+                        .map(
+                                taskItem -> taskItem.getTitle()
+                        )
+                        .collect(
+                                Collectors.joining(", ")
+                        );
+
+        System.out.println(
+                "Task titles: " + taskTitles
+        );
+
+        System.out.println();
+        System.out.println("=== STREAM FLAT MAP ===");
+
+        List<List<Task>> taskGroups
+                = Arrays.asList(
+                        tasks.subList(0, 2),
+                        tasks.subList(2, 4),
+                        tasks.subList(4, 6)
+                );
+
+        taskGroups.stream()
+                .flatMap(
+                        taskGroup -> taskGroup.stream()
+                )
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
+
+        System.out.println();
+        System.out.println("=== STREAM FINAL PRACTICE ===");
+
+        tasks.stream()
+                .filter(
+                        taskItem -> taskItem.getProgress() >= 30
+                )
+                .sorted(
+                        (taskA, taskB)
+                        -> Integer.compare(
+                                taskB.getProgress(),
+                                taskA.getProgress()
+                        )
+                )
+                .limit(3)
+                .forEach(
+                        taskItem -> System.out.println(
+                                taskItem.getTitle()
+                                + " | "
+                                + taskItem.getProgress()
+                                + "%"
+                        )
+                );
     }
 }
