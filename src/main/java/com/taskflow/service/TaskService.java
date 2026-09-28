@@ -16,4 +16,12 @@ public class TaskService {
     public java.util.List<TaskEntity> getAllTasks() {
         return taskRepository.findAll();
     }
+
+    public TaskEntity createTask(TaskEntity task) {
+        return taskRepository.save(task);
+    }
+
+    public TaskEntity getTaskById(Long id) {
+        return taskRepository.findById(id).orElse(null);
+    }
 }
