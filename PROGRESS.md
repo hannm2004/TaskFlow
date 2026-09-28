@@ -1,27 +1,31 @@
-# TaskFlow Learning Progress
+TaskFlow Learning Progress
 
-## Project
+Project
 
-* Project: TaskFlow
-* Direction: Java Backend + Docker
-* Repository: GitHub TaskFlow
-* Local path: `D:\TaskFlow\taskflow`
-* Java: JDK 21
-* Build tool: Maven
-* Main package: `com.taskflow`
-* Current branch: `feature/java-foundation`
+Project: TaskFlow
 
----
+Direction: Java Backend + Docker
 
-# Learning Roadmap
+Repository: GitHub TaskFlow
 
-```text
+Local path: D:\TaskFlow\taskflow
+
+Java: JDK 21
+
+Build tool: Maven
+
+Main package: com.taskflow
+
+Current branch: feature/spring-boot
+
+Learning Roadmap
+
 Java Foundation
 → Collections & Generics
 → Exceptions & Optional
 → Lambda & Stream API
 → Maven
-→ SQL / PostgreSQL
+→ SQL / MySQL
 → HTTP / REST
 → Spring Boot
 → JPA / Hibernate
@@ -33,488 +37,369 @@ Java Foundation
 → Docker
 → CI/CD
 → Advanced / Microservices / Cloud
-```
 
----
+Note: TaskFlow uses MySQL 8.4 in Docker, not PostgreSQL.
 
-# Current Progress
+Current Progress
 
-```text
-Java Foundation        ✅ Completed
-Collections            ✅ Completed
-Generics               ✅ Completed
-Exceptions             ✅ Completed
-Optional               ✅ Completed
-Lambda                 ✅ Completed
-Stream API             🔄 In Progress
-Maven                  ⏳ Later
-SQL / PostgreSQL       ⏳ Later
-HTTP / REST            ⏳ Later
-Spring Boot            ⏳ Later
-JPA / Hibernate        ⏳ Later
-DTO / Validation       ⏳ Later
+Java Foundation       ✅ Completed
+Collections           ✅ Completed
+Generics              ✅ Completed
+Exceptions            ✅ Completed
+Optional              ✅ Completed
+Lambda                ✅ Completed
+Stream API            ✅ Completed
+Maven                 🔄 Used / continuing with Spring Boot
+SQL / MySQL           🔄 Basic integration completed
+HTTP / REST            🔄 CRUD API completed
+Spring Boot            🔄 In Progress
+JPA / Hibernate        🔄 In Progress
+DTO / Validation       ⏳ Next
 Security / JWT         ⏳ Later
-Testing                 ⏳ Later
+Testing                ⏳ Later
 Redis                  ⏳ Later
 RabbitMQ               ⏳ Later
-Docker                 ⏳ Later
+Docker                 🔄 MySQL already running with Docker
 CI/CD                  ⏳ Later
 Advanced / Cloud       ⏳ Later
-```
-
----
-
-# Java Foundation
-
-* [x] Variables / Data Types
-* [x] Operators
-* [x] If / Else
-* [x] Validation
-* [x] Methods
-* [x] Loops
-* [x] Arrays
-* [x] Class & Object
-* [x] Constructor
-* [x] Encapsulation
-* [x] Inheritance
-* [x] Polymorphism
-* [x] Abstraction
-* [x] Interface
-
----
-
-# Collections
-
-* [x] Collections
-
-  * [x] List
-  * [x] Set
-  * [x] Map
-
-### List
-
-* [x] `ArrayList`
-* [x] `add()`
-* [x] `size()`
-* [x] `get()`
-* [x] `remove()`
-* [x] Searching Task by ID
-* [x] Iterating through List
-
-### Set
-
-* [x] `HashSet`
-* [x] `add()`
-* [x] `size()`
-* [x] `contains()`
-* [x] `remove()`
-* [x] Iterating through Set
-* [x] Duplicate prevention
-
-### Map
-
-* [x] `HashMap`
-* [x] `put()`
-* [x] `get()`
-* [x] `remove()`
-* [x] `containsKey()`
-* [x] `containsValue()`
-* [x] `Map.Entry`
-* [x] `entrySet()`
-* [x] Iterating through Map
-
----
-
-# Generics
-
-* [x] Generic Type `<T>`
-* [x] Generic Class `Box<T>`
-* [x] Diamond Operator `<>`
-* [x] Generic Method `<T>`
-* [x] Bounded Generic `<T extends Task>`
-* [x] Generic Repository `GenericRepository<T>`
-* [x] Bounded Generic Repository
-
-Example:
-
-```java
-public class GenericRepository<T extends Task>
-```
-
----
-
-# Exceptions
-
-* [x] `try`
-* [x] `catch`
-* [x] `finally`
-* [x] `throw`
-* [x] `throws`
-* [x] Checked Exception
-* [x] Unchecked Exception
-* [x] Custom Exception
-* [x] `InvalidTaskProgressException`
-* [x] `TaskNotFoundException`
-* [x] Exception handling practice
-* [x] Exception handling in `GenericRepository`
-* [x] `findById()` with custom exception
-
----
-
-# Optional
 
-## Status
+Java Foundation
 
-✅ Completed
+Variables / Data Types
 
-* [x] Why `null` can be problematic
-* [x] `Optional<T>`
-* [x] `Optional.of()`
-* [x] `Optional.ofNullable()`
-* [x] `Optional.empty()`
-* [x] `isPresent()`
-* [x] `orElse()`
-* [x] `orElseGet()`
-* [x] `orElseThrow()`
-* [x] Optional with Task
-* [x] Optional in Repository
-* [x] Optional `ifPresent()`
-* [x] Optional `map()`
-* [x] Optional `filter()`
-* [x] Optional `map()` + `filter()`
-* [x] `orElseThrow()` with Task
+Operators
 
-Current repository method:
+If / Else
 
-```java
-public Optional<T> findOptionalById(long id)
-```
+Validation
 
----
+Methods
 
-# Lambda
+Loops
 
-## Status
+Arrays
 
-✅ Completed
+Class & Object
 
-* [x] Lambda expression basic
-* [x] Lambda with one parameter
-* [x] Lambda with block body
-* [x] Lambda with `if`
-* [x] Lambda with Task
-* [x] `@FunctionalInterface`
-* [x] Custom functional interface `TaskAction`
-* [x] `Consumer<T>`
-* [x] `Predicate<T>`
-* [x] `Function<T, R>`
-* [x] Lambda with List
-* [x] Lambda with Task collection
+Constructor
 
-Example:
+Encapsulation
 
-```java
-tasks.forEach(
-        taskItem -> System.out.println(
-                taskItem.getTitle()
-        )
-);
-```
+Inheritance
 
----
+Polymorphism
 
-# Stream API
+Abstraction
 
-## Status
+Interface
 
-🔄 In Progress
+Collections
 
-The Stream API has been practiced using the TaskFlow `tasks` collection.
+List
 
----
+Set
 
-## Basic Operations
+Map
 
-* [x] `stream()`
-* [x] `forEach()`
-* [x] `filter()`
-* [x] `map()`
-* [x] `sorted()`
-* [x] `distinct()`
-* [x] `limit()`
+ArrayList
 
----
+HashSet
 
-## Stream Combinations
+HashMap
 
-* [x] `filter()` + `sorted()`
-* [x] `filter()` + `sorted()` + `limit()`
-* [x] `filter()` + `map()`
-* [x] Stream + Lambda
+Searching Task by ID
 
----
+Iterating through collections
 
-## Collect Operations
+Duplicate prevention
 
-* [x] `Collectors.toList()`
-* [x] Collect filtered Tasks to List
-* [x] Collect Task titles to List
-* [x] `Collectors.toSet()`
-* [x] Collect Task Types to Set
-* [x] `Collectors.toMap()`
-* [x] Collect Task ID → Title to Map
+Map.Entry / entrySet()
 
-Example:
+Generics
 
-```java
-Map<Long, String> taskTitleMap =
-        tasks.stream()
-                .collect(
-                        Collectors.toMap(
-                                taskItem -> taskItem.getId(),
-                                taskItem -> taskItem.getTitle()
-                        )
-                );
-```
+Generic Type <T>
 
----
+Generic Class Box<T>
 
-## Counting Operations
+Diamond Operator <>
 
-* [x] `count()`
-* [x] `filter()` + `count()`
+Generic Method <T>
 
-Example:
+Bounded Generic <T extends Task>
 
-```java
-long highProgressCount =
-        tasks.stream()
-                .filter(
-                        taskItem -> taskItem.getProgress() >= 50
-                )
-                .count();
-```
+Generic Repository
 
----
+Bounded Generic Repository
 
-## Matching Operations
+Exceptions
 
-* [x] `anyMatch()`
-* [x] `allMatch()`
-* [x] `noneMatch()`
+try / catch / finally
 
-### `anyMatch()`
+throw / throws
 
-Checks whether at least one element satisfies the condition.
+Checked Exception
 
-```java
-boolean hasCompletedTask =
-        tasks.stream()
-                .anyMatch(
-                        taskItem -> taskItem.getProgress() == 100
-                );
-```
+Unchecked Exception
 
-Result:
+Custom Exception
 
-```text
-Has completed task: true
-```
+InvalidTaskProgressException
 
----
-
-### `allMatch()`
-
-Checks whether every element satisfies the condition.
-
-```java
-boolean allTasksCompleted =
-        tasks.stream()
-                .allMatch(
-                        taskItem -> taskItem.getProgress() == 100
-                );
-```
+TaskNotFoundException
 
-Result:
+Exception handling practice
 
-```text
-All tasks completed: false
-```
+Exception handling in GenericRepository
 
----
+findById() with custom exception
 
-### `noneMatch()`
+Optional
 
-Checks whether no element satisfies the condition.
+Status: ✅ Completed
 
-```java
-boolean hasNoCompletedTask =
-        tasks.stream()
-                .noneMatch(
-                        taskItem -> taskItem.getProgress() == 100
-                );
-```
+Why null can be problematic
 
-Current TaskFlow data contains a task with `100%` progress, therefore:
+Optional<T>{=html}
 
-```text
-No completed task: false
-```
+Optional.of()
 
----
+Optional.ofNullable()
 
-# Finding Operations
+Optional.empty()
 
-* [x] `findFirst()`
-* [x] `findFirst()` + `filter()`
-* [x] `findFirst()` + `Optional`
-* [x] `findFirst()` + `Optional.map()`
-* [x] `findFirst()` + `Optional.orElse()`
-* [x] `findAny()`
-* [x] `findAny()` + `filter()`
+isPresent()
 
-Example:
+orElse()
 
-```java
-Optional<Task> firstHighProgressTask =
-        tasks.stream()
-                .filter(
-                        taskItem -> taskItem.getProgress() >= 50
-                )
-                .findFirst();
-```
+orElseGet()
 
-Optional handling:
+orElseThrow()
 
-```java
-String noCompletedTaskTitle
-        = noCompletedTask
-                .map(
-                        taskItem -> taskItem.getTitle()
-                )
-                .orElse("No task found");
-```
+Optional with Task
 
----
+Optional in Repository
 
-# Current Stream API Checkpoint
+ifPresent()
 
-Completed:
+map()
 
-```text
-Stream Basic                         ✅
-Filter                               ✅
-Map                                  ✅
-Sorted                               ✅
-Filter + Sorted                      ✅
-Distinct                             ✅
-Limit                                ✅
-Filter + Sorted + Limit              ✅
-Collect → List                       ✅
-Collect → Titles                     ✅
-Collect → Set                        ✅
-Collect → Map                        ✅
-Count                                ✅
-Count + Filter                       ✅
-anyMatch                             ✅
-allMatch                             ✅
-noneMatch                            ✅
-findFirst                            ✅
-findFirst + filter                   ✅
-findFirst + Optional                 ✅
-findAny                              ✅
-findAny + filter                     ✅
-```
+filter()
 
----
+map() + filter()
 
-# Latest Session — 2026-09-23
+orElseThrow() with Task
 
-Completed during this session:
+Lambda
 
-* [x] `findAny()`
-* [x] `findAny()` + `filter()`
-* [x] `noneMatch()`
-* [x] Fixed duplicate variable name `noCompletedTask`
-* [x] Renamed `noneMatch()` result variable to `hasNoCompletedTask`
-* [x] Successfully ran the project
-* [x] Verified `BUILD SUCCESS`
+Status: ✅ Completed
 
-Important lesson from the duplicate variable error:
+Lambda expression basic
 
-```text
-noCompletedTask
-→ Optional<Task>
+Lambda with parameters
 
-hasNoCompletedTask
-→ boolean
-```
+Lambda with block body
 
-These variables represent different concepts and therefore should have different names.
+Lambda with if
 
----
+Lambda with Task
 
-# Current Stop Point
+@FunctionalInterface
 
-## Stream API — Match & Find Operations
+Custom functional interface TaskAction
 
-Current completed point:
+Consumer<T>{=html}
 
-```text
+Predicate<T>{=html}
+
+Function<T, R>
+
+Lambda with List
+
+Lambda with Task collection
+
+Stream API
+
+Status: ✅ Completed
+
+stream()
+
+forEach()
+
+filter()
+
+map()
+
+sorted()
+
+distinct()
+
+limit()
+
+filter() + sorted()
+
+filter() + sorted() + limit()
+
+filter() + map()
+
+Stream + Lambda
+
+Collectors.toList()
+
+Collectors.toSet()
+
+Collectors.toMap()
+
+count()
+
+filter() + count()
+
+anyMatch()
+
+allMatch()
+
 noneMatch()
-        ↓
-BUILD SUCCESS
-        ↓
-STOP FOR TODAY
-```
 
-The project is currently paused here.
+findFirst()
 
----
+findFirst() + filter()
 
-# Next Learning Session
+findFirst() + Optional
 
-Continue from:
+findFirst() + Optional.map()
 
-```text
-Stream API
-```
+findFirst() + Optional.orElse()
 
-Do **not** restart Optional or Lambda.
+findAny()
 
-Next step should continue with the remaining useful Stream API concepts, one small concept at a time.
+findAny() + filter()
 
-After the Stream API checkpoint is completed:
+Spring Boot + JPA + REST
 
-```text
-Stream API
-    ↓
-Verify all exercises
-    ↓
-git status
-    ↓
-git diff
-    ↓
-mvn clean compile
-    ↓
-Commit Stream checkpoint
-    ↓
-Push origin/feature/java-foundation
-    ↓
-Update PROGRESS.md
-```
+Status: 🔄 In Progress
 
-Then move to:
+Spring Boot Setup
 
-```text
+Create Spring Boot project
+
+Java 21
+
 Maven
-```
 
----
+Spring Boot 4.1.0
 
-# Important Project Files
+Spring Web
 
-```text
+Spring Data JPA
+
+MySQL Connector
+
+Validation dependency
+
+Spring Boot application startup
+
+Health endpoint
+
+Docker + MySQL
+
+Docker Desktop
+
+Docker Compose
+
+MySQL 8.4 container
+
+Container: taskflow-mysql
+
+Database: taskflow_db
+
+MySQL connection from Spring Boot
+
+Hibernate/JPA connection verification
+
+Compose file:
+
+docker/compose.yaml
+
+JPA Entity
+
+Create TaskEntity
+
+@Entity
+
+@Id
+
+@GeneratedValue
+
+Default constructor for JPA
+
+Constructor for Task creation
+
+Getters / Setters
+
+Hibernate generated task_entity table
+
+Repository
+
+Create TaskRepository
+
+Extend JpaRepository<TaskEntity, Long>
+
+findAll()
+
+save()
+
+findById()
+
+deleteById()
+
+Service
+
+Create TaskService
+
+Constructor Injection
+
+getAllTasks()
+
+createTask()
+
+getTaskById()
+
+updateTask()
+
+deleteTask()
+
+Controller
+
+Create TaskController
+
+@RestController
+
+@RequestMapping("/api/tasks")
+
+GET /api/tasks
+
+GET /api/tasks/{id}
+
+POST /api/tasks
+
+PUT /api/tasks/{id}
+
+DELETE /api/tasks/{id}
+
+REST API Verification
+
+All basic CRUD operations were tested successfully with Postman:
+
+POST   /api/tasks        ✅
+GET    /api/tasks        ✅
+GET    /api/tasks/{id}   ✅
+PUT    /api/tasks/{id}   ✅
+DELETE /api/tasks/{id}   ✅
+
+The Task was created, read, updated, and deleted successfully through
+the API and MySQL.
+
+Important Project Files
+
 src/main/java/com/taskflow/
 
 ├── Main.java
@@ -527,103 +412,46 @@ src/main/java/com/taskflow/
 ├── GenericRepository.java
 ├── InvalidTaskProgressException.java
 ├── TaskNotFoundException.java
-└── TaskAction.java
-```
+├── TaskAction.java
+├── TaskflowApplication.java
+│
+├── controller/
+│   ├── HealthController.java
+│   └── TaskController.java
+│
+├── entity/
+│   └── TaskEntity.java
+│
+├── repository/
+│   └── TaskRepository.java
+│
+└── service/
+    └── TaskService.java
 
----
+Current Architecture
 
-# TaskFlow Domain Model
+HTTP Client / Postman
+        ↓
+TaskController
+        ↓
+TaskService
+        ↓
+TaskRepository
+        ↓
+TaskEntity / JPA / Hibernate
+        ↓
+MySQL 8.4
+        ↓
+Docker
 
-```text
-                    Task
-                     │
-        ┌────────────┼────────────┐
-        ↓            ↓            ↓
- FeatureTask      BugTask    ImprovementTask
-        │            │
-        └────── Assignable ──────┘
-```
+This is currently a layered modular monolith.
 
-`Task`:
+Advanced concepts such as Redis, RabbitMQ/Kafka, microservices, CI/CD,
+and cloud deployment will be introduced later rather than copied
+directly from the FinSight reference project.
 
-```text
-id
-title
-description
-priority
-progress
-```
+Git Branch Strategy
 
-`FeatureTask`:
-
-```text
-featureCategory
-```
-
-`BugTask`:
-
-```text
-bugSeverity
-```
-
-`ImprovementTask`:
-
-```text
-improvementArea
-```
-
----
-
-# Generic Repository
-
-Current repository:
-
-```java
-public class GenericRepository<T extends Task> {
-
-    private List<T> items = new ArrayList<>();
-
-    public void add(T item) {
-        items.add(item);
-    }
-
-    public List<T> getAll() {
-        return items;
-    }
-
-    public T findById(long id) {
-
-        for (T item : items) {
-
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-
-        throw new TaskNotFoundException(
-                "Task with ID " + id + " not found"
-        );
-    }
-
-    public Optional<T> findOptionalById(long id) {
-
-        for (T item : items) {
-
-            if (item.getId() == id) {
-                return Optional.of(item);
-            }
-        }
-
-        return Optional.empty();
-    }
-}
-```
-
----
-
-# Git Branch Strategy
-
-```text
 main
 → stable
 
@@ -632,57 +460,115 @@ develop
 
 feature/*
 → individual learning / feature branches
-```
 
 Current branch:
 
-```text
-feature/java-foundation
-```
+feature/spring-boot
 
----
+Git Checkpoints
 
-# Git Verification
+Important checkpoints:
 
-Before committing:
+Java Foundation
+→ completed
 
-```powershell
-git status
-```
+Stream API
+→ completed
 
-Review changes:
+Spring Boot + MySQL + JPA + basic REST
+→ commit: 7e22e37
+  feat: add spring boot mysql task api
 
-```powershell
-git diff
-```
+Task Create + Find By ID
+→ commit: ba08b34
+  feat: add task create and find by id
 
-Compile:
+Task CRUD
+→ completed and committed
+  (latest commit hash should be checked with `git log` when resuming)
 
-```powershell
-mvn clean compile
-```
+Working tree at the end of today's session:
 
-Run:
+clean
 
-```powershell
-mvn exec:java "-Dexec.mainClass=com.taskflow.Main"
-```
+Current Stop Point --- 2026-09-28
 
-Review:
+Today's session completed the first practical Spring Boot CRUD API.
 
-```powershell
-git diff --stat
-```
+Completed today:
 
-Then commit and push only after verification.
+Spring Boot project setup
 
----
+MySQL 8.4 with Docker
 
-# Standard Learning Flow
+Spring Boot ↔ MySQL connection
+
+TaskEntity
+
+TaskRepository
+
+TaskService
+
+TaskController
+
+GET all tasks
+
+POST create task
+
+GET task by ID
+
+PUT update task
+
+DELETE task
+
+Tested CRUD using Postman
+
+Verified data was persisted and updated in MySQL
+
+Deleted Task and verified it was gone
+
+Git checkpoint committed
+
+Working tree clean
+
+Next Learning Session
+
+Do not restart Java Foundation, Optional, Lambda, or Stream API.
+
+Continue from:
+
+Spring Boot + REST + JPA
+        ↓
+Improve CRUD API
+
+Next logical steps:
+
+Handle TaskNotFoundException / 404
+        ↓
+Validation
+        ↓
+DTO
+        ↓
+Global Exception Handling
+        ↓
+Improve REST responses
+        ↓
+Testing
+
+The first next task should be:
+
+GET /api/tasks/{id}
+        ↓
+Task does not exist
+        ↓
+404 Not Found
+
+Do not jump directly to Security/JWT, Redis, RabbitMQ, or Microservices.
+
+Standard Learning Flow
 
 For every TaskFlow lesson:
 
-```text
 Learn concept
     ↓
 Understand concept
@@ -706,25 +592,19 @@ mvn clean compile
 Commit
     ↓
 Push
-```
 
----
-
-# Learning Principle
+Learning Principle
 
 TaskFlow is both:
 
-```text
 Learning Project
 +
 Java Backend Portfolio Project
-```
 
 The goal is not simply to make the application run.
 
 Each stage should build practical backend knowledge:
 
-```text
 Java
  ↓
 OOP
@@ -743,7 +623,7 @@ Stream API
  ↓
 Maven
  ↓
-SQL / PostgreSQL
+SQL / MySQL
  ↓
 HTTP / REST
  ↓
@@ -768,61 +648,43 @@ CI/CD
 Advanced / Microservices / Cloud
  ↓
 Backend Portfolio
-```
 
----
 
-# How To Continue
+Latest Checkpoint Summary
 
-When starting a new chat:
-
-```text
-Tiếp tục TaskFlow
-```
-
-Then:
-
-1. Check the current Git status.
-2. Check the latest Git log.
-3. Read `PROGRESS.md` if necessary.
-4. Continue from the latest checkpoint.
-5. Do not restart completed lessons.
-6. Learn flexibly by milestone/checkpoint rather than fixed calendar days.
-7. Learn one small concept at a time.
-8. Run and verify each exercise before moving forward.
-9. Keep meaningful Git commits.
-10. Push completed checkpoints to `origin/feature/java-foundation`.
-
----
-
-# Latest Checkpoint Summary
-
-```text
-Java Foundation        ✅
-Collections            ✅
-Generics               ✅
-Exceptions             ✅
-Optional               ✅
-Lambda                 ✅
-Stream API             🔄
-                         ↑
-                    CURRENT
-```
+Java Foundation       ✅
+Collections           ✅
+Generics              ✅
+Exceptions            ✅
+Optional              ✅
+Lambda                ✅
+Stream API            ✅
+Maven                 🔄
+SQL / MySQL           🔄
+HTTP / REST            🔄
+Spring Boot            🔄
+JPA / Hibernate        🔄
 
 Today's stopping point:
 
-```text
-Stream API
-→ findAny()
-→ findAny() + filter()
-→ noneMatch()
-→ BUILD SUCCESS
-```
+Spring Boot
+→ MySQL Docker
+→ JPA Entity
+→ Repository
+→ Service
+→ REST Controller
+→ Create
+→ Read
+→ Update
+→ Delete
+→ Postman verification
+→ Git commit
+→ STOP FOR TODAY
 
 Next time:
 
-```text
-Tiếp tục Stream API
-```
-
-Do not restart from the beginning.
+Tiếp tục TaskFlow
+→ Improve CRUD error handling
+→ 404 Not Found
+→ Validation
+→ DTO
