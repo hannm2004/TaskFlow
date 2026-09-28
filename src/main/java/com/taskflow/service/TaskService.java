@@ -24,4 +24,24 @@ public class TaskService {
     public TaskEntity getTaskById(Long id) {
         return taskRepository.findById(id).orElse(null);
     }
+
+    public TaskEntity updateTask(Long id, TaskEntity updatedTask) {
+        TaskEntity existingTask = taskRepository.findById(id).orElse(null);
+
+        if (existingTask == null) {
+            return null;
+        }
+
+        existingTask.setTitle(updatedTask.getTitle());
+        existingTask.setDescription(updatedTask.getDescription());
+        existingTask.setPriority(updatedTask.getPriority());
+        existingTask.setStatus(updatedTask.getStatus());
+        existingTask.setProgress(updatedTask.getProgress());
+
+        return taskRepository.save(existingTask);
+    }
+
+    public void deleteTask(Long id) {
+        taskRepository.deleteById(id);
+    }
 }

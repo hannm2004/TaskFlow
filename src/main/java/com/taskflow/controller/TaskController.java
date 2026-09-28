@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -33,5 +35,18 @@ public class TaskController {
     @GetMapping("/{id}")
     public TaskEntity getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
+    }
+
+    @PutMapping("/{id}")
+    public TaskEntity updateTask(
+            @PathVariable Long id,
+            @RequestBody TaskEntity task) {
+
+        return taskService.updateTask(id, task);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
     }
 }
