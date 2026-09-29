@@ -14,69 +14,41 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import jakarta.validation.Valid;
 import com.taskflow.dto.TaskRequest;
 import com.taskflow.dto.TaskResponse;
+import com.taskflow.mapper.TaskMapper;
 
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
 
     private final TaskService taskService;
+    private final TaskMapper taskMapper;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, TaskMapper taskMapper) {
         this.taskService = taskService;
+        this.taskMapper = taskMapper;
     }
 
     @GetMapping
     public List<TaskResponse> getAllTasks() {
-
         return taskService.getAllTasks()
                 .stream()
-                .map(task -> new TaskResponse(
-                        task.getId(),
-                        task.getTitle(),
-                        task.getDescription(),
-                        task.getPriority(),
-                        task.getStatus(),
-                        task.getProgress()
-                ))
+                .map(taskMapper::toResponse)
                 .toList();
     }
 
     @GetMapping("/{id}")
     public TaskResponse getTaskById(@PathVariable Long id) {
-
         TaskEntity task = taskService.getTaskById(id);
-
-        return new TaskResponse(
-                task.getId(),
-                task.getTitle(),
-                task.getDescription(),
-                task.getPriority(),
-                task.getStatus(),
-                task.getProgress()
-        );
+        return taskMapper.toResponse(task);
     }
 
     @PostMapping
     public TaskResponse createTask(@Valid @RequestBody TaskRequest request) {
-
-        TaskEntity task = new TaskEntity(
-                request.getTitle(),
-                request.getDescription(),
-                request.getPriority(),
-                request.getStatus(),
-                request.getProgress()
-        );
+        TaskEntity task = taskMapper.toEntity(request);
 
         TaskEntity createdTask = taskService.createTask(task);
 
-        return new TaskResponse(
-                createdTask.getId(),
-                createdTask.getTitle(),
-                createdTask.getDescription(),
-                createdTask.getPriority(),
-                createdTask.getStatus(),
-                createdTask.getProgress()
-        );
+        return taskMapper.toResponse(createdTask);
     }
 
     @PutMapping("/{id}")
@@ -84,24 +56,11 @@ public class TaskController {
             @PathVariable Long id,
             @Valid @RequestBody TaskRequest request) {
 
-        TaskEntity task = new TaskEntity(
-                request.getTitle(),
-                request.getDescription(),
-                request.getPriority(),
-                request.getStatus(),
-                request.getProgress()
-        );
+        TaskEntity task = taskMapper.toEntity(request);
 
         TaskEntity updatedTask = taskService.updateTask(id, task);
 
-        return new TaskResponse(
-                updatedTask.getId(),
-                updatedTask.getTitle(),
-                updatedTask.getDescription(),
-                updatedTask.getPriority(),
-                updatedTask.getStatus(),
-                updatedTask.getProgress()
-        );
+        return taskMapper.toResponse(updatedTask);
     }
 
     @DeleteMapping("/{id}")
