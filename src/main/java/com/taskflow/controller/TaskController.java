@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -28,19 +29,14 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskEntity createTask(@RequestBody TaskEntity task) {
+    public TaskEntity createTask(@Valid @RequestBody TaskEntity task) {
         return taskService.createTask(task);
-    }
-
-    @GetMapping("/{id}")
-    public TaskEntity getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id);
     }
 
     @PutMapping("/{id}")
     public TaskEntity updateTask(
             @PathVariable Long id,
-            @RequestBody TaskEntity task) {
+            @Valid @RequestBody TaskEntity task) {
 
         return taskService.updateTask(id, task);
     }

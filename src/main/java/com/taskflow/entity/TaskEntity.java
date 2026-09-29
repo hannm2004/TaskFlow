@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class TaskEntity {
@@ -12,18 +15,21 @@ public class TaskEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title must not be blank")
     private String title;
 
+    @NotBlank(message = "Description must not be blank")
     private String description;
 
+    @NotBlank(message = "Priority must not be blank")
     private String priority;
 
+    @NotBlank(message = "Status must not be blank")
     private String status;
 
+    @Min(value = 0, message = "Progress must be at least 0")
+    @Max(value = 100, message = "Progress must not exceed 100")
     private Integer progress;
-
-    public TaskEntity() {
-    }
 
     public TaskEntity(
             String title,
