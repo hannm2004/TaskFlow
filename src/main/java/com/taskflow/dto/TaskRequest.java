@@ -1,19 +1,10 @@
-package com.taskflow.entity;
+package com.taskflow.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-@Entity
-public class TaskEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TaskRequest {
 
     @NotBlank(message = "Title must not be blank")
     private String title;
@@ -31,29 +22,7 @@ public class TaskEntity {
     @Max(value = 100, message = "Progress must not exceed 100")
     private Integer progress;
 
-    public TaskEntity() {
-    }
-
-    public TaskEntity(
-            String title,
-            String description,
-            String priority,
-            String status,
-            Integer progress) {
-
-        this.title = title;
-        this.description = description;
-        this.priority = priority;
-        this.status = status;
-        this.progress = progress;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public TaskRequest() {
     }
 
     public String getTitle() {
