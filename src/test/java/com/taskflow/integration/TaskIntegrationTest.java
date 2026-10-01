@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -37,11 +39,73 @@ class TaskIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        // Apply Spring Security filter chain via SecurityMockMvcConfigurers
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
         taskRepository.deleteAll();
     }
 
+    // ──────────────────────────────────────────────────────────────────────────
+    // Security: Public endpoint
+    // ──────────────────────────────────────────────────────────────────────────
+
     @Test
+    void healthEndpoint_shouldBePublicAndReturnOk() throws Exception {
+        // /api/health is permitAll — no authentication needed
+        mockMvc.perform(get("/api/health"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("TaskFlow API is running")));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Security: Protected endpoints — unauthenticated must be rejected
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Test
+    void getTasks_withoutAuth_shouldReturn401() throws Exception {
+        mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void createTask_withoutAuth_shouldReturn401() throws Exception {
+        String requestJson = """
+                {
+                    "title": "Unauthorized Task",
+                    "description": "Should be rejected",
+                    "priority": "LOW",
+                    "status": "TODO",
+                    "progress": 0
+                }
+                """;
+        mockMvc.perform(post("/api/tasks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void updateTask_withoutAuth_shouldReturn401() throws Exception {
+        mockMvc.perform(put("/api/tasks/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void deleteTask_withoutAuth_shouldReturn401() throws Exception {
+        mockMvc.perform(delete("/api/tasks/1"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Authenticated CRUD tests (using @WithMockUser)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Test
+    @WithMockUser
     void getAllTasks_shouldReturnTasksFromDatabase() throws Exception {
         TaskEntity task1 = new TaskEntity("Task 1", "Description 1", "HIGH", "TODO", 0);
         TaskEntity task2 = new TaskEntity("Task 2", "Description 2", "MEDIUM", "IN_PROGRESS", 40);
@@ -56,6 +120,7 @@ class TaskIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getTaskById_shouldReturnTask_whenTaskExists() throws Exception {
         TaskEntity task = new TaskEntity("Existing Task", "Detail info", "HIGH", "TODO", 10);
         TaskEntity savedTask = taskRepository.save(task);
@@ -70,6 +135,7 @@ class TaskIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void getTaskById_shouldReturn404_whenTaskDoesNotExist() throws Exception {
         mockMvc.perform(get("/api/tasks/999999"))
                 .andExpect(status().isNotFound())
@@ -77,6 +143,7 @@ class TaskIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void createTask_shouldPersistAndReturnCreatedTask() throws Exception {
         String requestJson = """
                 {
@@ -103,6 +170,7 @@ class TaskIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void createTask_shouldReturn400_whenValidationFails() throws Exception {
         String invalidJson = """
                 {
@@ -124,6 +192,7 @@ class TaskIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void updateTask_shouldModifyAndReturnUpdatedTask() throws Exception {
         TaskEntity initialTask = new TaskEntity("Original Title", "Original Desc", "LOW", "TODO", 0);
         TaskEntity savedTask = taskRepository.save(initialTask);
@@ -156,6 +225,7 @@ class TaskIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void deleteTask_shouldRemoveTaskFromDatabase() throws Exception {
         TaskEntity task = new TaskEntity("To Delete", "Will be removed", "LOW", "DONE", 100);
         TaskEntity savedTask = taskRepository.save(task);

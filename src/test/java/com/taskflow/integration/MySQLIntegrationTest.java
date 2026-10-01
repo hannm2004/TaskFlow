@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -73,15 +75,73 @@ class MySQLIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        // Apply Spring Security filter chain via SecurityMockMvcConfigurers
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
         taskRepository.deleteAll();
     }
 
     // ──────────────────────────────────────────────────────────────────────────
-    // Tests (identical logic to TaskIntegrationTest but running against MySQL)
+    // Security: Public endpoint
     // ──────────────────────────────────────────────────────────────────────────
 
     @Test
+    void tc_healthEndpoint_shouldBePublicAndReturnOk() throws Exception {
+        // /api/health is permitAll — no authentication needed
+        mockMvc.perform(get("/api/health"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("TaskFlow API is running")));
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Security: Protected endpoints — unauthenticated must be rejected
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Test
+    void tc_getTasks_withoutAuth_shouldReturn401() throws Exception {
+        mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void tc_createTask_withoutAuth_shouldReturn401() throws Exception {
+        String requestJson = """
+                {
+                    "title": "Unauthorized Task",
+                    "description": "Should be rejected",
+                    "priority": "LOW",
+                    "status": "TODO",
+                    "progress": 0
+                }
+                """;
+        mockMvc.perform(post("/api/tasks")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void tc_updateTask_withoutAuth_shouldReturn401() throws Exception {
+        mockMvc.perform(put("/api/tasks/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void tc_deleteTask_withoutAuth_shouldReturn401() throws Exception {
+        mockMvc.perform(delete("/api/tasks/1"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Authenticated CRUD tests (using @WithMockUser)
+    // ──────────────────────────────────────────────────────────────────────────
+
+    @Test
+    @WithMockUser
     void tc_getAllTasks_shouldReturnTasksFromDatabase() throws Exception {
         TaskEntity task1 = new TaskEntity("TC Task 1", "Description 1", "HIGH", "TODO", 0);
         TaskEntity task2 = new TaskEntity("TC Task 2", "Description 2", "MEDIUM", "IN_PROGRESS", 40);
@@ -96,6 +156,7 @@ class MySQLIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void tc_getTaskById_shouldReturnTask_whenTaskExists() throws Exception {
         TaskEntity task = new TaskEntity("TC Existing Task", "Detail info", "HIGH", "TODO", 10);
         TaskEntity savedTask = taskRepository.save(task);
@@ -110,6 +171,7 @@ class MySQLIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void tc_getTaskById_shouldReturn404_whenTaskDoesNotExist() throws Exception {
         mockMvc.perform(get("/api/tasks/999999"))
                 .andExpect(status().isNotFound())
@@ -117,6 +179,7 @@ class MySQLIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void tc_createTask_shouldPersistAndReturnCreatedTask() throws Exception {
         String requestJson = """
                 {
@@ -143,6 +206,7 @@ class MySQLIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void tc_createTask_shouldReturn400_whenValidationFails() throws Exception {
         String invalidJson = """
                 {
@@ -164,6 +228,7 @@ class MySQLIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void tc_updateTask_shouldModifyAndReturnUpdatedTask() throws Exception {
         TaskEntity initialTask = new TaskEntity("TC Original Title", "TC Original Desc", "LOW", "TODO", 0);
         TaskEntity savedTask = taskRepository.save(initialTask);
@@ -196,6 +261,7 @@ class MySQLIntegrationTest {
     }
 
     @Test
+    @WithMockUser
     void tc_deleteTask_shouldRemoveTaskFromDatabase() throws Exception {
         TaskEntity task = new TaskEntity("TC To Delete", "Will be removed", "LOW", "DONE", 100);
         TaskEntity savedTask = taskRepository.save(task);
