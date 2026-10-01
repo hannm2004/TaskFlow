@@ -1,12 +1,26 @@
 package com.taskflow.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Response body returned when reading task data")
 public class TaskResponse {
 
+    @Schema(description = "Unique identifier of the task", example = "1")
     private Long id;
+
+    @Schema(description = "Title of the task", example = "Fix login bug")
     private String title;
+
+    @Schema(description = "Detailed description of the task", example = "Users cannot log in with special characters in password")
     private String description;
+
+    @Schema(description = "Priority level of the task", example = "HIGH")
     private String priority;
+
+    @Schema(description = "Current status of the task", example = "TODO")
     private String status;
+
+    @Schema(description = "Completion progress percentage (0–100)", example = "0")
     private Integer progress;
 
     public TaskResponse() {

@@ -8,6 +8,7 @@
 - **TaskNotFoundException + Xử lý lỗi 404:** 🟢 Completed
 - **DTO + Validation:** 🟢 Completed
 - **TaskMapper:** 🟢 Completed *(Đã commit & push)*
+- **Swagger / OpenAPI:** 🟢 Completed
 ---
 ## 🧪 Testing
 
@@ -51,26 +52,49 @@
 
 ---
 
+## 📖 Swagger / OpenAPI
+🟢 Completed
+- Đã tích hợp SpringDoc OpenAPI (`org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.1`)
+- Đã tạo cấu hình: `src/main/java/com/taskflow/config/OpenApiConfig.java`
+- Đã document REST API cho TaskController bằng OpenAPI annotations (`@Tag`, `@Operation`, `@ApiResponses`, `@Parameter`):
+  - GET /api/tasks
+  - GET /api/tasks/{id}
+  - POST /api/tasks
+  - PUT /api/tasks/{id}
+  - DELETE /api/tasks/{id}
+- Đã document Request/Response DTO bằng `@Schema`:
+  - `TaskRequest`
+  - `TaskResponse`
+- Đã document HTTP status codes:
+  - HTTP 200 (Success)
+  - HTTP 400 Validation Error
+  - HTTP 404 Task Not Found
+- Swagger UI đã được cấu hình và có thể sử dụng để test API
+- URLs:
+  - Swagger UI: http://localhost:8080/swagger-ui/index.html
+  - OpenAPI JSON: http://localhost:8080/v3/api-docs
+
+---
+
 ## 📍 Latest Checkpoint
 
-**Checkpoint:** Integration Testing với MySQL + Testcontainers  
+**Checkpoint:** Swagger / OpenAPI  
 **Status:** 🟢 Completed  
 **Testing:** 26/26 PASS  
-**Next:** Swagger / OpenAPI
+**Next:** Spring Security / Authentication
 
 ---
 
 ## ⏭️ Kế hoạch tiếp theo
 
-### Swagger / OpenAPI
-- Tích hợp Swagger/OpenAPI
-- Document REST API
-- Document Request/Response DTO
-- Document HTTP status codes và validation errors
-- Sử dụng Swagger UI để test API
+### Spring Security / Authentication
+- Tìm hiểu Spring Security
+- Authentication
+- Password hashing
+- Login
+- JWT Authentication
 
-### Sau Swagger
-- Spring Security / Authentication
+### Sau Authentication
 - Authorization
 - Database Migration
 - Docker hoàn thiện
