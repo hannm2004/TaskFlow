@@ -1,6 +1,5 @@
 package com.taskflow.exception;
 
-import com.taskflow.TaskNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

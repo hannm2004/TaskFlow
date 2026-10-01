@@ -3,7 +3,7 @@ package com.taskflow.service;
 import com.taskflow.entity.TaskEntity;
 import com.taskflow.repository.TaskRepository;
 import org.springframework.stereotype.Service;
-import com.taskflow.TaskNotFoundException;
+import com.taskflow.exception.TaskNotFoundException;
 
 @Service
 public class TaskService {

@@ -91,7 +91,7 @@ class TaskIntegrationTest {
         mockMvc.perform(post("/api/tasks")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.title", is("New Integration Task")))
                 .andExpect(jsonPath("$.status", is("TODO")))
@@ -161,7 +161,7 @@ class TaskIntegrationTest {
         TaskEntity savedTask = taskRepository.save(task);
 
         mockMvc.perform(delete("/api/tasks/" + savedTask.getId()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         assertFalse(taskRepository.existsById(savedTask.getId()));
     }
