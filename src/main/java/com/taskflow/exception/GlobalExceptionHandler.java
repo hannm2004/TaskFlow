@@ -23,4 +23,16 @@ public class GlobalExceptionHandler {
                 .get(0)
                 .getDefaultMessage();
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ex.getMessage();
+    }
 }
